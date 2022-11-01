@@ -1,2 +1,10 @@
 server:
   port: 8090
+
+spring:
+  datasource:
+    username: root
+    password: root
+    url: jdbc:mysql://150.158.170.135:3360/Blog?useSSL=false&serverTimezone=Asia/Shanghai
+    master:
+      driver-class-name: com.mysql.cj.jdbc.Driver
