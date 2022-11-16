@@ -95,7 +95,7 @@ public class LoginController {
 
         // 获取真实客户端IP地址
         String ipAddress = request.getHeader("X-Real-IP");
-        if (org.apache.commons.lang3.StringUtils.isBlank(ipAddress)) {
+        if (StringUtils.isBlank(ipAddress)) {
             ipAddress = request.getRemoteAddr();
         }
 
