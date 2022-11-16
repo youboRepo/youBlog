@@ -1,4 +1,4 @@
-package com.youbo.youblog.api.entity;
+package com.youbo.youblog.api.user.entity;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.FieldStrategy;
@@ -12,7 +12,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
- * 用户实体类
+ * 用户表实体类
  *
  * @author youxiaobo
  * @date 2022/11/16

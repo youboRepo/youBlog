@@ -1,10 +1,10 @@
-package com.youbo.youblog.api.entity;
+package com.youbo.youblog.api.user.entity;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * 用户定制类
+ * 用户表定制类
  *
  * @author youxiaobo
  * @date 2022/11/16

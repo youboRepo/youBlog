@@ -1,10 +1,10 @@
-package com.youbo.youblog.service.mapper;
+package com.youbo.youblog.service.user.mapper;
 
-import com.youbo.youblog.api.entity.User;
+import com.youbo.youblog.api.user.entity.User;
 import com.youbo.youblog.common.jdbc.MyBaseMapper;
 
 /**
- * 用户持久层接口
+ * 用户表持久层接口
  *
  * @author youxiaobo
  * @date 2022/11/16
