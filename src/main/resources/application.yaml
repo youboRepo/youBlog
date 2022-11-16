@@ -4,8 +4,8 @@ server:
 spring:
   datasource:
     username: root
-    password: root
-    url: jdbc:mysql://150.158.170.135:3360/Blog?useSSL=false&serverTimezone=Asia/Shanghai
+    password: 20092009
+    url: jdbc:mysql://10.30.1.22:3306/supplier?useSSL=false&serverTimezone=Asia/Shanghai
     master:
       driver-class-name: com.mysql.cj.jdbc.Driver
 

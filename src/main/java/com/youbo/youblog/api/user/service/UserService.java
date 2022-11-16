@@ -11,6 +11,13 @@ import com.youbo.youblog.api.user.entity.UserCustom;
 public interface UserService
 {
     /**
+     * 根据名字获取用户对象
+     *
+     * @param username
+     */
+    UserCustom getByUsername(String username);
+    
+    /**
      * 修改用户对象
      *
      * @param user

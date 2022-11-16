@@ -15,7 +15,7 @@ import java.util.Map;
 /**
  * 签名工具类
  *
- * @author chenlinfeng
+ * @author youxiaobo
  * @date 2022/10/11
  */
 public class OauthSignUtils

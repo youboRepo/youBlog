@@ -3,7 +3,7 @@ package com.youbo.youblog.common.constant;
 /**
  * 授权常量类
  *
- * @author chenlinfeng
+ * @author youxiaobo
  * @date 2022/10/08
  */
 public interface OauthConstant

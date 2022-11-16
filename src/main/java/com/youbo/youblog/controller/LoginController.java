@@ -11,7 +11,6 @@ import com.youbo.youblog.common.model.Response;
 import com.youbo.youblog.common.security.JwtProperties;
 import com.youbo.youblog.common.security.SecurityUser;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
