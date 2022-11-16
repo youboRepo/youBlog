@@ -38,16 +38,15 @@ import java.util.function.Function;
  * @author youxiaobo
  * @date 2020/9/1
  */
-public class MyServiceImpl<M extends MyBaseMapper<E>, E> extends ServiceImpl<M, E>
-{
+public class MyServiceImpl<M extends MyBaseMapper<E>, E> extends ServiceImpl<M, E> {
+
     /**
      * 插入实体对象
      *
      * @param entity 实体对象
      * @return 是否成功
      */
-    protected boolean insert(E entity)
-    {
+    protected boolean insert(E entity) {
         return Optional.ofNullable(entity).map(this::save).orElse(false);
     }
 
@@ -61,8 +60,7 @@ public class MyServiceImpl<M extends MyBaseMapper<E>, E> extends ServiceImpl<M, 
      * @param <I>    主键类型
      * @return 返回主键
      */
-    protected <D, I extends Serializable> I insert(D dto, Function<D, E> mapper, Function<E, I> getId)
-    {
+    protected <D, I extends Serializable> I insert(D dto, Function<D, E> mapper, Function<E, I> getId) {
         return Optional.ofNullable(dto).map(mapper).filter(this::save).map(getId).orElse(null);
     }
 
@@ -77,8 +75,8 @@ public class MyServiceImpl<M extends MyBaseMapper<E>, E> extends ServiceImpl<M, 
      * @param <I>    主键类型
      * @return 返回主键
      */
-    protected <D, I extends Serializable> I insert(D dto, Consumer<D> action, Function<D, E> mapper, Function<E, I> getId)
-    {
+    protected <D, I extends Serializable> I insert(D dto, Consumer<D> action, Function<D, E> mapper,
+        Function<E, I> getId) {
         Optional.ofNullable(dto).ifPresent(action);
         return this.insert(dto, mapper, getId);
     }
@@ -89,10 +87,8 @@ public class MyServiceImpl<M extends MyBaseMapper<E>, E> extends ServiceImpl<M, 
      * @param entityList 实体列表
      * @return 是否成功
      */
-    protected boolean insert(Collection<? extends E> entityList)
-    {
-        if (CollectionUtils.isEmpty(entityList))
-        {
+    protected boolean insert(Collection<? extends E> entityList) {
+        if (CollectionUtils.isEmpty(entityList)) {
             return false;
         }
 
@@ -106,8 +102,7 @@ public class MyServiceImpl<M extends MyBaseMapper<E>, E> extends ServiceImpl<M, 
      * @param entity 实体对象
      * @return 是否成功
      */
-    protected boolean update(E entity)
-    {
+    protected boolean update(E entity) {
         return Optional.ofNullable(entity).map(this::updateById).orElse(false);
     }
 
@@ -119,8 +114,7 @@ public class MyServiceImpl<M extends MyBaseMapper<E>, E> extends ServiceImpl<M, 
      * @param <D>    传输类型
      * @return 是否成功
      */
-    protected <D> boolean update(D dto, Function<D, E> mapper)
-    {
+    protected <D> boolean update(D dto, Function<D, E> mapper) {
         return Optional.ofNullable(dto).map(mapper).map(this::updateById).orElse(false);
     }
 
@@ -133,8 +127,7 @@ public class MyServiceImpl<M extends MyBaseMapper<E>, E> extends ServiceImpl<M, 
      * @param <D>    传输类型
      * @return 是否成功
      */
-    protected <D> boolean update(D dto, Consumer<D> action, Function<D, E> mapper)
-    {
+    protected <D> boolean update(D dto, Consumer<D> action, Function<D, E> mapper) {
         Optional.ofNullable(dto).ifPresent(action);
         return this.update(dto, mapper);
     }
@@ -145,10 +138,8 @@ public class MyServiceImpl<M extends MyBaseMapper<E>, E> extends ServiceImpl<M, 
      * @param entityList 实体列表
      * @return 是否成功
      */
-    protected boolean update(Collection<? extends E> entityList)
-    {
-        if (CollectionUtils.isEmpty(entityList))
-        {
+    protected boolean update(Collection<? extends E> entityList) {
+        if (CollectionUtils.isEmpty(entityList)) {
             return false;
         }
 
@@ -168,8 +159,7 @@ public class MyServiceImpl<M extends MyBaseMapper<E>, E> extends ServiceImpl<M, 
      * @param <D>     传输类型
      * @return 是否成功
      */
-    protected <D> boolean update(Collection<D> dtoList, Function<Collection<D>, Collection<E>> mapper)
-    {
+    protected <D> boolean update(Collection<D> dtoList, Function<Collection<D>, Collection<E>> mapper) {
         return Optional.ofNullable(dtoList).map(mapper).map(this::updateBatchById).orElse(false);
     }
 
@@ -182,10 +172,9 @@ public class MyServiceImpl<M extends MyBaseMapper<E>, E> extends ServiceImpl<M, 
      * @param <D>     传输类型
      * @return 是否成功
      */
-    protected <D> boolean update(Collection<D> dtoList, Consumer<D> action, Function<Collection<D>, Collection<E>> mapper)
-    {
-        if (CollectionUtils.isNotEmpty(dtoList))
-        {
+    protected <D> boolean update(Collection<D> dtoList, Consumer<D> action,
+        Function<Collection<D>, Collection<E>> mapper) {
+        if (CollectionUtils.isNotEmpty(dtoList)) {
             dtoList.forEach(action);
         }
         return this.update(dtoList, mapper);
@@ -197,8 +186,7 @@ public class MyServiceImpl<M extends MyBaseMapper<E>, E> extends ServiceImpl<M, 
      * @param id 主键的值
      * @return 是否成功
      */
-    protected boolean remove(Serializable id)
-    {
+    protected boolean remove(Serializable id) {
         return Optional.ofNullable(id).map(this::removeById).orElse(false);
     }
 
@@ -208,8 +196,7 @@ public class MyServiceImpl<M extends MyBaseMapper<E>, E> extends ServiceImpl<M, 
      * @param ids 主键列表
      * @return 是否成功
      */
-    protected boolean remove(Collection<? extends Serializable> ids)
-    {
+    protected boolean remove(Collection<? extends Serializable> ids) {
         return this.removeByIds(ids);
     }
 
@@ -220,10 +207,8 @@ public class MyServiceImpl<M extends MyBaseMapper<E>, E> extends ServiceImpl<M, 
      * @param value  条件的值
      * @return 是否成功
      */
-    protected boolean remove(SFunction<E, ?> column, Object value)
-    {
-        if (ObjectUtil.hasNull(column, value) || "".equals(value))
-        {
+    protected boolean remove(SFunction<E, ?> column, Object value) {
+        if (ObjectUtil.hasNull(column, value) || "".equals(value)) {
             return false;
         }
 
@@ -239,10 +224,8 @@ public class MyServiceImpl<M extends MyBaseMapper<E>, E> extends ServiceImpl<M, 
      * @param values 条件列表
      * @return 是否成功
      */
-    protected boolean remove(SFunction<E, ?> column, Collection<?> values)
-    {
-        if (column == null || CollectionUtils.isEmpty(values))
-        {
+    protected boolean remove(SFunction<E, ?> column, Collection<?> values) {
+        if (column == null || CollectionUtils.isEmpty(values)) {
             return false;
         }
 
@@ -257,8 +240,7 @@ public class MyServiceImpl<M extends MyBaseMapper<E>, E> extends ServiceImpl<M, 
      * @param entity 实体对象
      * @return 是否成功
      */
-    protected boolean ignore(E entity)
-    {
+    protected boolean ignore(E entity) {
         return Optional.ofNullable(entity).map(baseMapper::ignore).map(SqlHelper::retBool).orElse(false);
     }
 
@@ -268,10 +250,8 @@ public class MyServiceImpl<M extends MyBaseMapper<E>, E> extends ServiceImpl<M, 
      * @param entityList 实体列表
      * @return 是否成功
      */
-    protected boolean ignore(Collection<? extends E> entityList)
-    {
-        if (CollectionUtils.isEmpty(entityList))
-        {
+    protected boolean ignore(Collection<? extends E> entityList) {
+        if (CollectionUtils.isEmpty(entityList)) {
             return false;
         }
 
@@ -284,8 +264,7 @@ public class MyServiceImpl<M extends MyBaseMapper<E>, E> extends ServiceImpl<M, 
      * @param entity 实体对象
      * @return 是否成功
      */
-    protected boolean replace(E entity)
-    {
+    protected boolean replace(E entity) {
         return Optional.ofNullable(entity).map(baseMapper::replace).map(SqlHelper::retBool).orElse(false);
     }
 
@@ -295,10 +274,8 @@ public class MyServiceImpl<M extends MyBaseMapper<E>, E> extends ServiceImpl<M, 
      * @param entityList 实体列表
      * @return 是否成功
      */
-    protected boolean replace(Collection<? extends E> entityList)
-    {
-        if (CollectionUtils.isEmpty(entityList))
-        {
+    protected boolean replace(Collection<? extends E> entityList) {
+        if (CollectionUtils.isEmpty(entityList)) {
             return false;
         }
 
@@ -311,8 +288,7 @@ public class MyServiceImpl<M extends MyBaseMapper<E>, E> extends ServiceImpl<M, 
      * @param entity 实体对象
      * @return 是否成功
      */
-    protected boolean duplicate(E entity)
-    {
+    protected boolean duplicate(E entity) {
         return Optional.ofNullable(entity).map(baseMapper::duplicate).map(SqlHelper::retBool).orElse(false);
     }
 
@@ -322,10 +298,8 @@ public class MyServiceImpl<M extends MyBaseMapper<E>, E> extends ServiceImpl<M, 
      * @param entityList 实体列表
      * @return 是否成功
      */
-    protected boolean duplicate(Collection<? extends E> entityList)
-    {
-        if (CollectionUtils.isEmpty(entityList))
-        {
+    protected boolean duplicate(Collection<? extends E> entityList) {
+        if (CollectionUtils.isEmpty(entityList)) {
             return false;
         }
 
@@ -338,8 +312,7 @@ public class MyServiceImpl<M extends MyBaseMapper<E>, E> extends ServiceImpl<M, 
      * @param id 主键的值
      * @return 实体对象
      */
-    protected E get(Serializable id)
-    {
+    protected E get(Serializable id) {
         Assert.notNull(id, "主键不能为空");
         return this.getById(id);
     }
@@ -352,8 +325,7 @@ public class MyServiceImpl<M extends MyBaseMapper<E>, E> extends ServiceImpl<M, 
      * @param <D>    传输类型
      * @return 传输对象
      */
-    protected <D> D get(Serializable id, Function<E, D> mapper)
-    {
+    protected <D> D get(Serializable id, Function<E, D> mapper) {
         return Optional.ofNullable(id).map(this::getById).map(mapper).orElse(null);
     }
 
@@ -366,8 +338,7 @@ public class MyServiceImpl<M extends MyBaseMapper<E>, E> extends ServiceImpl<M, 
      * @param <D>    传输类型
      * @return 传输对象
      */
-    protected <D> D get(Serializable id, Function<E, D> mapper, Consumer<D> action)
-    {
+    protected <D> D get(Serializable id, Function<E, D> mapper, Consumer<D> action) {
         D dto = this.get(id, mapper);
         action.accept(dto);
         return dto;
@@ -381,8 +352,7 @@ public class MyServiceImpl<M extends MyBaseMapper<E>, E> extends ServiceImpl<M, 
      * @param <D>   传输类型
      * @return 传输对象
      */
-    protected <D> D get(Serializable id, Class<D> clazz)
-    {
+    protected <D> D get(Serializable id, Class<D> clazz) {
         return BeanUtils.clone(this.get(id), clazz);
     }
 
@@ -392,8 +362,7 @@ public class MyServiceImpl<M extends MyBaseMapper<E>, E> extends ServiceImpl<M, 
      * @param queryWrapper 查询条件
      * @return 实体对象
      */
-    protected E get(LambdaQueryWrapper<E> queryWrapper)
-    {
+    protected E get(LambdaQueryWrapper<E> queryWrapper) {
         Assert.notNull(queryWrapper, "条件不能为空");
         queryWrapper.last("LIMIT 1");
         return this.getOne(queryWrapper);
@@ -405,8 +374,7 @@ public class MyServiceImpl<M extends MyBaseMapper<E>, E> extends ServiceImpl<M, 
      * @param consumer 设置条件
      * @return 实体对象
      */
-    protected E get(Consumer<LambdaQueryWrapper<E>> consumer)
-    {
+    protected E get(Consumer<LambdaQueryWrapper<E>> consumer) {
         LambdaQueryWrapper<E> queryWrapper = Wrappers.lambdaQuery();
         consumer.accept(queryWrapper);
         queryWrapper.last("LIMIT 1");
@@ -421,8 +389,7 @@ public class MyServiceImpl<M extends MyBaseMapper<E>, E> extends ServiceImpl<M, 
      * @param <D>      传输类型
      * @return 传输对象
      */
-    protected <D> D get(Consumer<LambdaQueryWrapper<E>> consumer, Function<E, D> mapper)
-    {
+    protected <D> D get(Consumer<LambdaQueryWrapper<E>> consumer, Function<E, D> mapper) {
         return Optional.ofNullable(consumer).map(this::get).map(mapper).orElse(null);
     }
 
@@ -433,10 +400,8 @@ public class MyServiceImpl<M extends MyBaseMapper<E>, E> extends ServiceImpl<M, 
      * @param value  条件的值
      * @return 实体对象
      */
-    protected E get(SFunction<E, ?> column, Object value)
-    {
-        if (ObjectUtil.hasNull(column, value) || "".equals(value))
-        {
+    protected E get(SFunction<E, ?> column, Object value) {
+        if (ObjectUtil.hasNull(column, value) || "".equals(value)) {
             throw new BaseException("条件不能为空");
         }
 
@@ -455,8 +420,7 @@ public class MyServiceImpl<M extends MyBaseMapper<E>, E> extends ServiceImpl<M, 
      * @param <D>    传输类型
      * @return 传输对象
      */
-    protected <D> D get(SFunction<E, ?> column, Object value, Class<D> clazz)
-    {
+    protected <D> D get(SFunction<E, ?> column, Object value, Class<D> clazz) {
         E entity = this.get(column, value);
         return BeanUtils.clone(entity, clazz);
     }
@@ -469,10 +433,8 @@ public class MyServiceImpl<M extends MyBaseMapper<E>, E> extends ServiceImpl<M, 
      * @param <Q>     查询类型
      * @return 实体对象
      */
-    protected <Q> E get(Q query, Function<Q, LambdaQueryWrapper<E>> builder)
-    {
-        if (ObjectUtil.hasNull(query, builder))
-        {
+    protected <Q> E get(Q query, Function<Q, LambdaQueryWrapper<E>> builder) {
+        if (ObjectUtil.hasNull(query, builder)) {
             throw new BaseException("条件不能为空");
         }
 
@@ -491,8 +453,7 @@ public class MyServiceImpl<M extends MyBaseMapper<E>, E> extends ServiceImpl<M, 
      * @param <D>     传输类型
      * @return 传输对象
      */
-    protected <Q, D> D get(Q query, Function<Q, LambdaQueryWrapper<E>> builder, Class<D> clazz)
-    {
+    protected <Q, D> D get(Q query, Function<Q, LambdaQueryWrapper<E>> builder, Class<D> clazz) {
         E entity = this.get(query, builder);
         return BeanUtils.clone(entity, clazz);
     }
@@ -503,10 +464,9 @@ public class MyServiceImpl<M extends MyBaseMapper<E>, E> extends ServiceImpl<M, 
      * @param ids 主键列表
      * @return 实体列表
      */
-    protected List<E> list(Collection<? extends Serializable> ids)
-    {
+    protected List<E> list(Collection<? extends Serializable> ids) {
         return Optional.ofNullable(ids).filter(CollectionUtils::isNotEmpty).map(this::listByIds)
-                .orElseGet(ListUtil::empty);
+            .orElseGet(ListUtil::empty);
     }
 
     /**
@@ -517,10 +477,9 @@ public class MyServiceImpl<M extends MyBaseMapper<E>, E> extends ServiceImpl<M, 
      * @param <D>    传输类型
      * @return 传输列表
      */
-    protected <D> List<D> list(Collection<? extends Serializable> ids, Function<Collection<E>, List<D>> mapper)
-    {
+    protected <D> List<D> list(Collection<? extends Serializable> ids, Function<Collection<E>, List<D>> mapper) {
         return Optional.ofNullable(ids).filter(CollectionUtils::isNotEmpty).map(this::listByIds).map(mapper)
-                .orElseGet(ListUtil::empty);
+            .orElseGet(ListUtil::empty);
     }
 
     /**
@@ -532,8 +491,8 @@ public class MyServiceImpl<M extends MyBaseMapper<E>, E> extends ServiceImpl<M, 
      * @param <D>    传输类型
      * @return 传输列表
      */
-    protected <D> List<D> list(Collection<? extends Serializable> ids, Function<Collection<E>, List<D>> mapper, Consumer<D> action)
-    {
+    protected <D> List<D> list(Collection<? extends Serializable> ids, Function<Collection<E>, List<D>> mapper,
+        Consumer<D> action) {
         List<D> dtoList = this.list(ids, mapper);
         dtoList.forEach(action);
         return dtoList;
@@ -547,8 +506,7 @@ public class MyServiceImpl<M extends MyBaseMapper<E>, E> extends ServiceImpl<M, 
      * @param <D>   传输类型
      * @return 传输对象
      */
-    protected <D> List<D> list(Collection<? extends Serializable> ids, Class<D> clazz)
-    {
+    protected <D> List<D> list(Collection<? extends Serializable> ids, Class<D> clazz) {
         List<E> entityList = this.list(ids);
         return BeanUtils.clone(entityList, clazz);
     }
@@ -561,8 +519,7 @@ public class MyServiceImpl<M extends MyBaseMapper<E>, E> extends ServiceImpl<M, 
      * @param <D>          传输类型
      * @return 传输列表
      */
-    protected <D> List<D> list(Wrapper<E> queryWrapper, Class<D> clazz)
-    {
+    protected <D> List<D> list(Wrapper<E> queryWrapper, Class<D> clazz) {
         List<E> entityList = this.list(queryWrapper);
         return BeanUtils.clone(entityList, clazz);
     }
@@ -573,8 +530,7 @@ public class MyServiceImpl<M extends MyBaseMapper<E>, E> extends ServiceImpl<M, 
      * @param consumer 设置条件
      * @return 实体列表
      */
-    protected List<E> list(Consumer<LambdaQueryWrapper<E>> consumer)
-    {
+    protected List<E> list(Consumer<LambdaQueryWrapper<E>> consumer) {
         LambdaQueryWrapper<E> queryWrapper = Wrappers.lambdaQuery();
         consumer.accept(queryWrapper);
         return this.list(queryWrapper);
@@ -588,8 +544,7 @@ public class MyServiceImpl<M extends MyBaseMapper<E>, E> extends ServiceImpl<M, 
      * @param <D>      传输类型
      * @return 传输列表
      */
-    protected <D> List<D> list(Consumer<LambdaQueryWrapper<E>> consumer, Class<D> clazz)
-    {
+    protected <D> List<D> list(Consumer<LambdaQueryWrapper<E>> consumer, Class<D> clazz) {
         List<E> entityList = this.list(consumer);
         return BeanUtils.clone(entityList, clazz);
     }
@@ -602,8 +557,7 @@ public class MyServiceImpl<M extends MyBaseMapper<E>, E> extends ServiceImpl<M, 
      * @param <Q>     查询类型
      * @return 实体列表
      */
-    protected <Q> List<E> list(Q query, Function<Q, Wrapper<E>> builder)
-    {
+    protected <Q> List<E> list(Q query, Function<Q, Wrapper<E>> builder) {
         return Optional.ofNullable(query).map(builder).map(this::list).orElseGet(ListUtil::empty);
     }
 
@@ -617,8 +571,7 @@ public class MyServiceImpl<M extends MyBaseMapper<E>, E> extends ServiceImpl<M, 
      * @param <D>     传输类型
      * @return 传输列表
      */
-    protected <Q, D> List<D> list(Q query, Function<Q, Wrapper<E>> builder, Function<Collection<E>, List<D>> mapper)
-    {
+    protected <Q, D> List<D> list(Q query, Function<Q, Wrapper<E>> builder, Function<Collection<E>, List<D>> mapper) {
         return Optional.ofNullable(query).map(builder).map(this::list).map(mapper).orElseGet(ListUtil::empty);
     }
 
@@ -633,8 +586,8 @@ public class MyServiceImpl<M extends MyBaseMapper<E>, E> extends ServiceImpl<M, 
      * @param <D>     传输类型
      * @return 传输列表
      */
-    protected <Q, D> List<D> list(Q query, Function<Q, Wrapper<E>> builder, Function<Collection<E>, List<D>> mapper, Consumer<D> action)
-    {
+    protected <Q, D> List<D> list(Q query, Function<Q, Wrapper<E>> builder, Function<Collection<E>, List<D>> mapper,
+        Consumer<D> action) {
         List<D> dtoList = this.list(query, builder, mapper);
         dtoList.forEach(action);
         return dtoList;
@@ -650,8 +603,7 @@ public class MyServiceImpl<M extends MyBaseMapper<E>, E> extends ServiceImpl<M, 
      * @param <D>     传输类型
      * @return 传输列表
      */
-    protected <Q, D> List<D> list(Q query, Function<Q, Wrapper<E>> builder, Class<D> clazz)
-    {
+    protected <Q, D> List<D> list(Q query, Function<Q, Wrapper<E>> builder, Class<D> clazz) {
         List<E> entityList = this.list(query, builder);
         return BeanUtils.clone(entityList, clazz);
     }
@@ -663,10 +615,8 @@ public class MyServiceImpl<M extends MyBaseMapper<E>, E> extends ServiceImpl<M, 
      * @param value  条件的值
      * @return 实体列表
      */
-    protected List<E> list(SFunction<E, ?> column, Object value)
-    {
-        if (ObjectUtil.hasNull(column, value) || "".equals(value))
-        {
+    protected List<E> list(SFunction<E, ?> column, Object value) {
+        if (ObjectUtil.hasNull(column, value) || "".equals(value)) {
             return ListUtil.empty();
         }
 
@@ -684,8 +634,7 @@ public class MyServiceImpl<M extends MyBaseMapper<E>, E> extends ServiceImpl<M, 
      * @param <D>    传输类型
      * @return 传输列表
      */
-    protected <D> List<D> list(SFunction<E, ?> column, Object value, Class<D> clazz)
-    {
+    protected <D> List<D> list(SFunction<E, ?> column, Object value, Class<D> clazz) {
         List<E> entityList = this.list(column, value);
         return BeanUtils.clone(entityList, clazz);
     }
@@ -699,10 +648,8 @@ public class MyServiceImpl<M extends MyBaseMapper<E>, E> extends ServiceImpl<M, 
      * @param value2  条件的值2
      * @return 实体列表
      */
-    protected List<E> list(SFunction<E, ?> column1, Object value1, SFunction<E, ?> column2, Object value2)
-    {
-        if (ObjectUtil.hasNull(column1, value1, column2, value2) || "".equals(value1) || "".equals(value2))
-        {
+    protected List<E> list(SFunction<E, ?> column1, Object value1, SFunction<E, ?> column2, Object value2) {
+        if (ObjectUtil.hasNull(column1, value1, column2, value2) || "".equals(value1) || "".equals(value2)) {
             return ListUtil.empty();
         }
 
@@ -719,10 +666,8 @@ public class MyServiceImpl<M extends MyBaseMapper<E>, E> extends ServiceImpl<M, 
      * @param values 条件列表
      * @return 实体列表
      */
-    protected List<E> list(SFunction<E, ?> column, Collection<?> values)
-    {
-        if (column == null || CollectionUtils.isEmpty(values))
-        {
+    protected List<E> list(SFunction<E, ?> column, Collection<?> values) {
+        if (column == null || CollectionUtils.isEmpty(values)) {
             return ListUtil.empty();
         }
 
@@ -740,8 +685,7 @@ public class MyServiceImpl<M extends MyBaseMapper<E>, E> extends ServiceImpl<M, 
      * @param <D>    传输类型
      * @return 传输列表
      */
-    protected <D> List<D> list(SFunction<E, ?> column, Collection<?> values, Class<D> clazz)
-    {
+    protected <D> List<D> list(SFunction<E, ?> column, Collection<?> values, Class<D> clazz) {
         List<E> entityList = this.list(column, values);
         return BeanUtils.clone(entityList, clazz);
     }
@@ -754,8 +698,7 @@ public class MyServiceImpl<M extends MyBaseMapper<E>, E> extends ServiceImpl<M, 
      * @param <Q>     查询类型
      * @return 实体分页
      */
-    protected <Q extends PageQuery> PageDTO<E> page(Q query, Function<Q, Wrapper<E>> builder)
-    {
+    protected <Q extends PageQuery> PageDTO<E> page(Q query, Function<Q, Wrapper<E>> builder) {
         IPage<E> page = new Page<>(query.getCurrent(), query.getSize());
         Wrapper<E> queryWrapper = builder.apply(query);
         page = this.page(page, queryWrapper);
@@ -772,8 +715,8 @@ public class MyServiceImpl<M extends MyBaseMapper<E>, E> extends ServiceImpl<M, 
      * @param <D>     传输类型
      * @return 传输分页
      */
-    protected <Q extends PageQuery, D> PageDTO<D> page(Q query, Function<Q, Wrapper<E>> builder, Function<Collection<E>, List<D>> mapper)
-    {
+    protected <Q extends PageQuery, D> PageDTO<D> page(Q query, Function<Q, Wrapper<E>> builder,
+        Function<Collection<E>, List<D>> mapper) {
         return this.page(query, builder).clone(mapper);
     }
 
@@ -787,8 +730,7 @@ public class MyServiceImpl<M extends MyBaseMapper<E>, E> extends ServiceImpl<M, 
      * @param <D>     传输类型
      * @return 传输分页
      */
-    protected <Q extends PageQuery, D> PageDTO<D> page(Q query, Function<Q, Wrapper<E>> builder, Class<D> clazz)
-    {
+    protected <Q extends PageQuery, D> PageDTO<D> page(Q query, Function<Q, Wrapper<E>> builder, Class<D> clazz) {
         return this.page(query, builder).clone(BeanUtils::clone, clazz);
     }
 
@@ -802,8 +744,7 @@ public class MyServiceImpl<M extends MyBaseMapper<E>, E> extends ServiceImpl<M, 
      * @param <Q>     查询类型
      * @return 实体分页
      */
-    protected <Q> PageDTO<E> page(Q query, Function<Q, Wrapper<E>> builder, long current, long size)
-    {
+    protected <Q> PageDTO<E> page(Q query, Function<Q, Wrapper<E>> builder, long current, long size) {
         IPage<E> page = new Page<>(current, size);
         Wrapper<E> queryWrapper = builder.apply(query);
         page = this.page(page, queryWrapper);
@@ -818,8 +759,7 @@ public class MyServiceImpl<M extends MyBaseMapper<E>, E> extends ServiceImpl<M, 
      * @param <Q>     查询类型
      * @return 实体分页
      */
-    protected <Q> Integer count(Q query, Function<Q, Wrapper<E>> builder)
-    {
+    protected <Q> Integer count(Q query, Function<Q, Wrapper<E>> builder) {
         return Optional.ofNullable(query).map(builder).map(this::count).map(Long::intValue).orElse(0);
     }
 
@@ -834,8 +774,7 @@ public class MyServiceImpl<M extends MyBaseMapper<E>, E> extends ServiceImpl<M, 
      * @return 实体分页
      */
     @Deprecated
-    protected ListPage<E> page(Wrapper<E> queryWrapper, long current, long size)
-    {
+    protected ListPage<E> page(Wrapper<E> queryWrapper, long current, long size) {
         IPage<E> page = new Page<>(current, size);
         page = this.page(page, queryWrapper);
         return new ListPage<>(current, size, page.getTotal(), page.getRecords());
@@ -848,10 +787,8 @@ public class MyServiceImpl<M extends MyBaseMapper<E>, E> extends ServiceImpl<M, 
      * @param column       条件字段
      * @param value        条件的值
      */
-    protected void eq(LambdaQueryWrapper<E> queryWrapper, SFunction<E, ?> column, Object value)
-    {
-        if (ObjectUtil.hasNull(queryWrapper, column, value) || "".equals(value))
-        {
+    protected void eq(LambdaQueryWrapper<E> queryWrapper, SFunction<E, ?> column, Object value) {
+        if (ObjectUtil.hasNull(queryWrapper, column, value) || "".equals(value)) {
             return;
         }
 
@@ -865,10 +802,8 @@ public class MyServiceImpl<M extends MyBaseMapper<E>, E> extends ServiceImpl<M, 
      * @param column       条件字段
      * @param value        条件的值
      */
-    protected void ne(LambdaQueryWrapper<E> queryWrapper, SFunction<E, ?> column, Object value)
-    {
-        if (ObjectUtil.hasNull(queryWrapper, column, value) || "".equals(value))
-        {
+    protected void ne(LambdaQueryWrapper<E> queryWrapper, SFunction<E, ?> column, Object value) {
+        if (ObjectUtil.hasNull(queryWrapper, column, value) || "".equals(value)) {
             return;
         }
 
@@ -882,10 +817,8 @@ public class MyServiceImpl<M extends MyBaseMapper<E>, E> extends ServiceImpl<M, 
      * @param column       条件字段
      * @param value        条件的值
      */
-    protected void like(LambdaQueryWrapper<E> queryWrapper, SFunction<E, ?> column, String value)
-    {
-        if (ObjectUtil.hasNull(queryWrapper, column) || StringUtils.isBlank(value))
-        {
+    protected void like(LambdaQueryWrapper<E> queryWrapper, SFunction<E, ?> column, String value) {
+        if (ObjectUtil.hasNull(queryWrapper, column) || StringUtils.isBlank(value)) {
             return;
         }
 
@@ -899,10 +832,8 @@ public class MyServiceImpl<M extends MyBaseMapper<E>, E> extends ServiceImpl<M, 
      * @param column       条件字段
      * @param values       条件列表
      */
-    protected void like(LambdaQueryWrapper<E> queryWrapper, SFunction<E, ?> column, Collection<?> values)
-    {
-        if (ObjectUtil.hasNull(queryWrapper, column) || CollectionUtils.isEmpty(values))
-        {
+    protected void like(LambdaQueryWrapper<E> queryWrapper, SFunction<E, ?> column, Collection<?> values) {
+        if (ObjectUtil.hasNull(queryWrapper, column) || CollectionUtils.isEmpty(values)) {
             return;
         }
 
@@ -916,8 +847,7 @@ public class MyServiceImpl<M extends MyBaseMapper<E>, E> extends ServiceImpl<M, 
      * @param column       条件字段
      * @param value        条件的值
      */
-    protected void likeList(LambdaQueryWrapper<E> queryWrapper, SFunction<E, ?> column, String value)
-    {
+    protected void likeList(LambdaQueryWrapper<E> queryWrapper, SFunction<E, ?> column, String value) {
         List<String> values = CommonUtils.splitStringList(value);
         this.like(queryWrapper, column, values);
     }
@@ -930,10 +860,9 @@ public class MyServiceImpl<M extends MyBaseMapper<E>, E> extends ServiceImpl<M, 
      * @param column2      条件字段2
      * @param values       条件列表
      */
-    protected void like(LambdaQueryWrapper<E> queryWrapper, SFunction<E, ?> column1, SFunction<E, ?> column2, Collection<?> values)
-    {
-        if (ObjectUtil.hasNull(queryWrapper, column1, column2) || CollectionUtils.isEmpty(values))
-        {
+    protected void like(LambdaQueryWrapper<E> queryWrapper, SFunction<E, ?> column1, SFunction<E, ?> column2,
+        Collection<?> values) {
+        if (ObjectUtil.hasNull(queryWrapper, column1, column2) || CollectionUtils.isEmpty(values)) {
             return;
         }
 
@@ -951,8 +880,8 @@ public class MyServiceImpl<M extends MyBaseMapper<E>, E> extends ServiceImpl<M, 
      * @param column2      条件字段2
      * @param value        条件的值
      */
-    protected void likeList(LambdaQueryWrapper<E> queryWrapper, SFunction<E, ?> column1, SFunction<E, ?> column2, String value)
-    {
+    protected void likeList(LambdaQueryWrapper<E> queryWrapper, SFunction<E, ?> column1, SFunction<E, ?> column2,
+        String value) {
         List<String> values = CommonUtils.splitStringList(value);
         this.like(queryWrapper, column1, column2, values);
     }
@@ -964,10 +893,8 @@ public class MyServiceImpl<M extends MyBaseMapper<E>, E> extends ServiceImpl<M, 
      * @param column       条件字段
      * @param value        条件的值
      */
-    protected void likeLeft(LambdaQueryWrapper<E> queryWrapper, SFunction<E, ?> column, String value)
-    {
-        if (ObjectUtil.hasNull(queryWrapper, column) || StringUtils.isBlank(value))
-        {
+    protected void likeLeft(LambdaQueryWrapper<E> queryWrapper, SFunction<E, ?> column, String value) {
+        if (ObjectUtil.hasNull(queryWrapper, column) || StringUtils.isBlank(value)) {
             return;
         }
 
@@ -981,10 +908,8 @@ public class MyServiceImpl<M extends MyBaseMapper<E>, E> extends ServiceImpl<M, 
      * @param column       条件字段
      * @param values       条件列表
      */
-    protected void likeLeft(LambdaQueryWrapper<E> queryWrapper, SFunction<E, ?> column, Collection<?> values)
-    {
-        if (ObjectUtil.hasNull(queryWrapper, column) || CollectionUtils.isEmpty(values))
-        {
+    protected void likeLeft(LambdaQueryWrapper<E> queryWrapper, SFunction<E, ?> column, Collection<?> values) {
+        if (ObjectUtil.hasNull(queryWrapper, column) || CollectionUtils.isEmpty(values)) {
             return;
         }
 
@@ -998,8 +923,7 @@ public class MyServiceImpl<M extends MyBaseMapper<E>, E> extends ServiceImpl<M, 
      * @param column       条件字段
      * @param value        条件的值
      */
-    protected void likeLeftList(LambdaQueryWrapper<E> queryWrapper, SFunction<E, ?> column, String value)
-    {
+    protected void likeLeftList(LambdaQueryWrapper<E> queryWrapper, SFunction<E, ?> column, String value) {
         List<String> values = CommonUtils.splitStringList(value);
         this.likeLeft(queryWrapper, column, values);
     }
@@ -1012,10 +936,9 @@ public class MyServiceImpl<M extends MyBaseMapper<E>, E> extends ServiceImpl<M, 
      * @param column2      条件字段2
      * @param values       条件列表
      */
-    protected void likeLeft(LambdaQueryWrapper<E> queryWrapper, SFunction<E, ?> column1, SFunction<E, ?> column2, Collection<?> values)
-    {
-        if (ObjectUtil.hasNull(queryWrapper, column1, column2) || CollectionUtils.isEmpty(values))
-        {
+    protected void likeLeft(LambdaQueryWrapper<E> queryWrapper, SFunction<E, ?> column1, SFunction<E, ?> column2,
+        Collection<?> values) {
+        if (ObjectUtil.hasNull(queryWrapper, column1, column2) || CollectionUtils.isEmpty(values)) {
             return;
         }
 
@@ -1033,8 +956,8 @@ public class MyServiceImpl<M extends MyBaseMapper<E>, E> extends ServiceImpl<M, 
      * @param column2      条件字段2
      * @param value        条件的值
      */
-    protected void likeLeftList(LambdaQueryWrapper<E> queryWrapper, SFunction<E, ?> column1, SFunction<E, ?> column2, String value)
-    {
+    protected void likeLeftList(LambdaQueryWrapper<E> queryWrapper, SFunction<E, ?> column1, SFunction<E, ?> column2,
+        String value) {
         List<String> values = CommonUtils.splitStringList(value);
         this.likeLeft(queryWrapper, column1, column2, values);
     }
@@ -1046,10 +969,8 @@ public class MyServiceImpl<M extends MyBaseMapper<E>, E> extends ServiceImpl<M, 
      * @param column       条件字段
      * @param value        条件的值
      */
-    protected void likeRight(LambdaQueryWrapper<E> queryWrapper, SFunction<E, ?> column, String value)
-    {
-        if (ObjectUtil.hasNull(queryWrapper, column) || StringUtils.isBlank(value))
-        {
+    protected void likeRight(LambdaQueryWrapper<E> queryWrapper, SFunction<E, ?> column, String value) {
+        if (ObjectUtil.hasNull(queryWrapper, column) || StringUtils.isBlank(value)) {
             return;
         }
 
@@ -1063,10 +984,8 @@ public class MyServiceImpl<M extends MyBaseMapper<E>, E> extends ServiceImpl<M, 
      * @param column       条件字段
      * @param values       条件列表
      */
-    protected void likeRight(LambdaQueryWrapper<E> queryWrapper, SFunction<E, ?> column, Collection<?> values)
-    {
-        if (ObjectUtil.hasNull(queryWrapper, column) || CollectionUtils.isEmpty(values))
-        {
+    protected void likeRight(LambdaQueryWrapper<E> queryWrapper, SFunction<E, ?> column, Collection<?> values) {
+        if (ObjectUtil.hasNull(queryWrapper, column) || CollectionUtils.isEmpty(values)) {
             return;
         }
 
@@ -1080,8 +999,7 @@ public class MyServiceImpl<M extends MyBaseMapper<E>, E> extends ServiceImpl<M, 
      * @param column       条件字段
      * @param value        条件的值
      */
-    protected void likeRightList(LambdaQueryWrapper<E> queryWrapper, SFunction<E, ?> column, String value)
-    {
+    protected void likeRightList(LambdaQueryWrapper<E> queryWrapper, SFunction<E, ?> column, String value) {
         List<String> values = CommonUtils.splitStringList(value);
         this.likeRight(queryWrapper, column, values);
     }
@@ -1094,10 +1012,9 @@ public class MyServiceImpl<M extends MyBaseMapper<E>, E> extends ServiceImpl<M, 
      * @param column2      条件字段2
      * @param values       条件列表
      */
-    protected void likeRight(LambdaQueryWrapper<E> queryWrapper, SFunction<E, ?> column1, SFunction<E, ?> column2, Collection<?> values)
-    {
-        if (ObjectUtil.hasNull(queryWrapper, column1, column2) || CollectionUtils.isEmpty(values))
-        {
+    protected void likeRight(LambdaQueryWrapper<E> queryWrapper, SFunction<E, ?> column1, SFunction<E, ?> column2,
+        Collection<?> values) {
+        if (ObjectUtil.hasNull(queryWrapper, column1, column2) || CollectionUtils.isEmpty(values)) {
             return;
         }
 
@@ -1115,8 +1032,8 @@ public class MyServiceImpl<M extends MyBaseMapper<E>, E> extends ServiceImpl<M, 
      * @param column2      条件字段2
      * @param value        条件的值
      */
-    protected void likeRightList(LambdaQueryWrapper<E> queryWrapper, SFunction<E, ?> column1, SFunction<E, ?> column2, String value)
-    {
+    protected void likeRightList(LambdaQueryWrapper<E> queryWrapper, SFunction<E, ?> column1, SFunction<E, ?> column2,
+        String value) {
         List<String> values = CommonUtils.splitStringList(value);
         this.likeRight(queryWrapper, column1, column2, values);
     }
@@ -1128,10 +1045,8 @@ public class MyServiceImpl<M extends MyBaseMapper<E>, E> extends ServiceImpl<M, 
      * @param column       条件字段
      * @param value        条件的值
      */
-    protected void notLike(LambdaQueryWrapper<E> queryWrapper, SFunction<E, ?> column, String value)
-    {
-        if (ObjectUtil.hasNull(queryWrapper, column) || StringUtils.isBlank(value))
-        {
+    protected void notLike(LambdaQueryWrapper<E> queryWrapper, SFunction<E, ?> column, String value) {
+        if (ObjectUtil.hasNull(queryWrapper, column) || StringUtils.isBlank(value)) {
             return;
         }
 
@@ -1145,10 +1060,8 @@ public class MyServiceImpl<M extends MyBaseMapper<E>, E> extends ServiceImpl<M, 
      * @param column       条件字段
      * @param values       条件列表
      */
-    protected void notLike(LambdaQueryWrapper<E> queryWrapper, SFunction<E, ?> column, Collection<?> values)
-    {
-        if (ObjectUtil.hasNull(queryWrapper, column) || CollectionUtils.isEmpty(values))
-        {
+    protected void notLike(LambdaQueryWrapper<E> queryWrapper, SFunction<E, ?> column, Collection<?> values) {
+        if (ObjectUtil.hasNull(queryWrapper, column) || CollectionUtils.isEmpty(values)) {
             return;
         }
 
@@ -1162,10 +1075,8 @@ public class MyServiceImpl<M extends MyBaseMapper<E>, E> extends ServiceImpl<M, 
      * @param column       条件字段
      * @param values       条件列表
      */
-    protected void in(LambdaQueryWrapper<E> queryWrapper, SFunction<E, ?> column, Collection<?> values)
-    {
-        if (ObjectUtil.hasNull(queryWrapper, column) || CollectionUtils.isEmpty(values))
-        {
+    protected void in(LambdaQueryWrapper<E> queryWrapper, SFunction<E, ?> column, Collection<?> values) {
+        if (ObjectUtil.hasNull(queryWrapper, column) || CollectionUtils.isEmpty(values)) {
             return;
         }
 
@@ -1179,8 +1090,7 @@ public class MyServiceImpl<M extends MyBaseMapper<E>, E> extends ServiceImpl<M, 
      * @param column       条件字段
      * @param value        条件的值
      */
-    protected void inString(LambdaQueryWrapper<E> queryWrapper, SFunction<E, ?> column, String value)
-    {
+    protected void inString(LambdaQueryWrapper<E> queryWrapper, SFunction<E, ?> column, String value) {
         List<String> values = CommonUtils.splitStringList(value);
         this.in(queryWrapper, column, values);
     }
@@ -1192,8 +1102,7 @@ public class MyServiceImpl<M extends MyBaseMapper<E>, E> extends ServiceImpl<M, 
      * @param column       条件字段
      * @param value        条件的值
      */
-    protected void inInteger(LambdaQueryWrapper<E> queryWrapper, SFunction<E, ?> column, String value)
-    {
+    protected void inInteger(LambdaQueryWrapper<E> queryWrapper, SFunction<E, ?> column, String value) {
         List<Integer> values = CommonUtils.splitIntegerList(value);
         this.in(queryWrapper, column, values);
     }
@@ -1205,8 +1114,7 @@ public class MyServiceImpl<M extends MyBaseMapper<E>, E> extends ServiceImpl<M, 
      * @param column       条件字段
      * @param value        条件的值
      */
-    protected void inLong(LambdaQueryWrapper<E> queryWrapper, SFunction<E, ?> column, String value)
-    {
+    protected void inLong(LambdaQueryWrapper<E> queryWrapper, SFunction<E, ?> column, String value) {
         List<Long> values = CommonUtils.splitLongList(value);
         this.in(queryWrapper, column, values);
     }
@@ -1218,10 +1126,8 @@ public class MyServiceImpl<M extends MyBaseMapper<E>, E> extends ServiceImpl<M, 
      * @param column       条件字段
      * @param values       条件列表
      */
-    protected void notIn(LambdaQueryWrapper<E> queryWrapper, SFunction<E, ?> column, Collection<?> values)
-    {
-        if (ObjectUtil.hasNull(queryWrapper, column) || CollectionUtils.isEmpty(values))
-        {
+    protected void notIn(LambdaQueryWrapper<E> queryWrapper, SFunction<E, ?> column, Collection<?> values) {
+        if (ObjectUtil.hasNull(queryWrapper, column) || CollectionUtils.isEmpty(values)) {
             return;
         }
 
@@ -1235,10 +1141,8 @@ public class MyServiceImpl<M extends MyBaseMapper<E>, E> extends ServiceImpl<M, 
      * @param column       条件字段
      * @param value        条件的值
      */
-    protected void gt(LambdaQueryWrapper<E> queryWrapper, SFunction<E, ?> column, Object value)
-    {
-        if (ObjectUtil.hasNull(queryWrapper, column, value))
-        {
+    protected void gt(LambdaQueryWrapper<E> queryWrapper, SFunction<E, ?> column, Object value) {
+        if (ObjectUtil.hasNull(queryWrapper, column, value)) {
             return;
         }
 
@@ -1252,10 +1156,8 @@ public class MyServiceImpl<M extends MyBaseMapper<E>, E> extends ServiceImpl<M, 
      * @param column       条件字段
      * @param value        条件的值
      */
-    protected void ge(LambdaQueryWrapper<E> queryWrapper, SFunction<E, ?> column, Object value)
-    {
-        if (ObjectUtil.hasNull(queryWrapper, column, value))
-        {
+    protected void ge(LambdaQueryWrapper<E> queryWrapper, SFunction<E, ?> column, Object value) {
+        if (ObjectUtil.hasNull(queryWrapper, column, value)) {
             return;
         }
 
@@ -1269,10 +1171,8 @@ public class MyServiceImpl<M extends MyBaseMapper<E>, E> extends ServiceImpl<M, 
      * @param column       条件字段
      * @param value        条件的值
      */
-    protected void lt(LambdaQueryWrapper<E> queryWrapper, SFunction<E, ?> column, Object value)
-    {
-        if (ObjectUtil.hasNull(queryWrapper, column, value))
-        {
+    protected void lt(LambdaQueryWrapper<E> queryWrapper, SFunction<E, ?> column, Object value) {
+        if (ObjectUtil.hasNull(queryWrapper, column, value)) {
             return;
         }
 
@@ -1286,10 +1186,8 @@ public class MyServiceImpl<M extends MyBaseMapper<E>, E> extends ServiceImpl<M, 
      * @param column       条件字段
      * @param value        条件的值
      */
-    protected void le(LambdaQueryWrapper<E> queryWrapper, SFunction<E, ?> column, Object value)
-    {
-        if (ObjectUtil.hasNull(queryWrapper, column, value))
-        {
+    protected void le(LambdaQueryWrapper<E> queryWrapper, SFunction<E, ?> column, Object value) {
+        if (ObjectUtil.hasNull(queryWrapper, column, value)) {
             return;
         }
 
@@ -1304,20 +1202,16 @@ public class MyServiceImpl<M extends MyBaseMapper<E>, E> extends ServiceImpl<M, 
      * @param from         开始条件
      * @param to           结束条件
      */
-    protected void range(LambdaQueryWrapper<E> queryWrapper, SFunction<E, ?> column, Object from, Object to)
-    {
-        if (ObjectUtil.hasNull(queryWrapper, column))
-        {
+    protected void range(LambdaQueryWrapper<E> queryWrapper, SFunction<E, ?> column, Object from, Object to) {
+        if (ObjectUtil.hasNull(queryWrapper, column)) {
             return;
         }
 
-        if (from != null)
-        {
+        if (from != null) {
             queryWrapper.ge(column, from);
         }
 
-        if (to != null)
-        {
+        if (to != null) {
             queryWrapper.le(column, to);
         }
     }
@@ -1329,10 +1223,8 @@ public class MyServiceImpl<M extends MyBaseMapper<E>, E> extends ServiceImpl<M, 
      * @param column       条件字段
      * @param value        条件的值
      */
-    protected void findInSet(LambdaQueryWrapper<E> queryWrapper, String column, Object value)
-    {
-        if (ObjectUtil.hasNull(queryWrapper, value) || StringUtils.isBlank(column) || "".equals(value))
-        {
+    protected void findInSet(LambdaQueryWrapper<E> queryWrapper, String column, Object value) {
+        if (ObjectUtil.hasNull(queryWrapper, value) || StringUtils.isBlank(column) || "".equals(value)) {
             return;
         }
 
@@ -1346,10 +1238,8 @@ public class MyServiceImpl<M extends MyBaseMapper<E>, E> extends ServiceImpl<M, 
      * @param column       条件字段
      * @param values       条件列表
      */
-    protected void findInSet(LambdaQueryWrapper<E> queryWrapper, String column, Collection<?> values)
-    {
-        if (queryWrapper == null || StringUtils.isBlank(column) || CollectionUtils.isEmpty(values))
-        {
+    protected void findInSet(LambdaQueryWrapper<E> queryWrapper, String column, Collection<?> values) {
+        if (queryWrapper == null || StringUtils.isBlank(column) || CollectionUtils.isEmpty(values)) {
             return;
         }
 
@@ -1363,10 +1253,8 @@ public class MyServiceImpl<M extends MyBaseMapper<E>, E> extends ServiceImpl<M, 
      * @param column       条件字段
      * @param value        条件的值
      */
-    protected void notFindInSet(LambdaQueryWrapper<E> queryWrapper, String column, Object value)
-    {
-        if (ObjectUtil.hasNull(queryWrapper, value) || StringUtils.isBlank(column) || "".equals(value))
-        {
+    protected void notFindInSet(LambdaQueryWrapper<E> queryWrapper, String column, Object value) {
+        if (ObjectUtil.hasNull(queryWrapper, value) || StringUtils.isBlank(column) || "".equals(value)) {
             return;
         }
 
@@ -1380,10 +1268,8 @@ public class MyServiceImpl<M extends MyBaseMapper<E>, E> extends ServiceImpl<M, 
      * @param column       条件字段
      * @param values       条件的值
      */
-    protected void notFindInSet(LambdaQueryWrapper<E> queryWrapper, String column, Collection<?> values)
-    {
-        if (queryWrapper == null || StringUtils.isBlank(column) || CollectionUtils.isEmpty(values))
-        {
+    protected void notFindInSet(LambdaQueryWrapper<E> queryWrapper, String column, Collection<?> values) {
+        if (queryWrapper == null || StringUtils.isBlank(column) || CollectionUtils.isEmpty(values)) {
             return;
         }
 
@@ -1397,10 +1283,8 @@ public class MyServiceImpl<M extends MyBaseMapper<E>, E> extends ServiceImpl<M, 
      * @param sql          条件语句
      * @param params       条件参数
      */
-    protected void having(LambdaQueryWrapper<E> queryWrapper, String sql, Object... params)
-    {
-        if (queryWrapper == null || StringUtils.isBlank(sql))
-        {
+    protected void having(LambdaQueryWrapper<E> queryWrapper, String sql, Object... params) {
+        if (queryWrapper == null || StringUtils.isBlank(sql)) {
             return;
         }
 
@@ -1413,10 +1297,8 @@ public class MyServiceImpl<M extends MyBaseMapper<E>, E> extends ServiceImpl<M, 
      * @param queryWrapper 查询条件
      * @param value        限制数量
      */
-    protected void limit(LambdaQueryWrapper<E> queryWrapper, Number value)
-    {
-        if (ObjectUtil.hasNull(queryWrapper, value))
-        {
+    protected void limit(LambdaQueryWrapper<E> queryWrapper, Number value) {
+        if (ObjectUtil.hasNull(queryWrapper, value)) {
             return;
         }
 
@@ -1424,14 +1306,12 @@ public class MyServiceImpl<M extends MyBaseMapper<E>, E> extends ServiceImpl<M, 
     }
 
     @Override
-    protected Class<M> currentMapperClass()
-    {
+    protected Class<M> currentMapperClass() {
         return (Class<M>) ReflectionKit.getSuperClassGenericType(this.getClass(), ServiceImpl.class, 0);
     }
 
     @Override
-    protected Class<E> currentModelClass()
-    {
+    protected Class<E> currentModelClass() {
         return (Class<E>) ReflectionKit.getSuperClassGenericType(this.getClass(), ServiceImpl.class, 1);
     }
 
@@ -1442,8 +1322,7 @@ public class MyServiceImpl<M extends MyBaseMapper<E>, E> extends ServiceImpl<M, 
      * @param method     执行方法
      * @return 是否成功
      */
-    private boolean executeBatch(Collection<? extends E> entityList, String method)
-    {
+    private boolean executeBatch(Collection<? extends E> entityList, String method) {
         String sqlStatement = mapperClass.getName() + StringPool.DOT + method;
         return executeBatch(entityList, (sqlSession, entity) -> sqlSession.insert(sqlStatement, entity));
     }

@@ -4,6 +4,7 @@ import com.youbo.youblog.common.exception.BaseException;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.util.Assert;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.YearMonth;
@@ -16,8 +17,8 @@ import java.util.Collection;
  * @author youxiaobo
  * @date 2020/8/30
  */
-public class ImportVerifyUtils
-{
+public class ImportVerifyUtils {
+
     /**
      * 日期格式
      */
@@ -40,8 +41,7 @@ public class ImportVerifyUtils
      * @param i
      * @param label
      */
-    public static void verify(String value, int i, String label)
-    {
+    public static void verify(String value, int i, String label) {
         Assert.hasText(value, "第[" + (i + 2) + "]行的" + label + "不能为空");
     }
 
@@ -52,8 +52,7 @@ public class ImportVerifyUtils
      * @param i
      * @param label
      */
-    public static void verify(Object value, int i, String label)
-    {
+    public static void verify(Object value, int i, String label) {
         Assert.notNull(value, "第[" + (i + 2) + "]行的" + label + "不能为空");
     }
 
@@ -64,8 +63,7 @@ public class ImportVerifyUtils
      * @param i
      * @param label
      */
-    public static void verifyExist(Object value, int i, String label)
-    {
+    public static void verifyExist(Object value, int i, String label) {
         Assert.isNull(value, "第[" + (i + 2) + "]行的" + label + "已存在");
     }
 
@@ -75,8 +73,7 @@ public class ImportVerifyUtils
      * @param i
      * @param label
      */
-    public static void verifyExist(int i, String label)
-    {
+    public static void verifyExist(int i, String label) {
         throw new BaseException("第[" + (i + 2) + "]行的" + label + "已存在");
     }
 
@@ -87,8 +84,7 @@ public class ImportVerifyUtils
      * @param i
      * @param label
      */
-    public static void verifyNotExist(Object value, int i, String label)
-    {
+    public static void verifyNotExist(Object value, int i, String label) {
         Assert.notNull(value, "第[" + (i + 2) + "]行的" + label + "不存在");
     }
 
@@ -99,8 +95,7 @@ public class ImportVerifyUtils
      * @param i
      * @param label
      */
-    public static void verifyNotExist(String value, int i, String label)
-    {
+    public static void verifyNotExist(String value, int i, String label) {
         Assert.hasText(value, "第[" + (i + 2) + "]行的" + label + "不存在");
     }
 
@@ -111,8 +106,7 @@ public class ImportVerifyUtils
      * @param i
      * @param label
      */
-    public static void verifyNotExist(Collection<?> values, int i, String label)
-    {
+    public static void verifyNotExist(Collection<?> values, int i, String label) {
         Assert.notEmpty(values, "第[" + (i + 2) + "]行的" + label + "不存在");
     }
 
@@ -122,8 +116,7 @@ public class ImportVerifyUtils
      * @param i
      * @param label
      */
-    public static void verifyNotExist(int i, String label)
-    {
+    public static void verifyNotExist(int i, String label) {
         throw new BaseException("第[" + (i + 2) + "]行的" + label + "不存在");
     }
 
@@ -135,15 +128,12 @@ public class ImportVerifyUtils
      * @param label
      * @param length
      */
-    public static void verifyLength(String value, int i, String label, int length)
-    {
-        if (StringUtils.isBlank(value))
-        {
+    public static void verifyLength(String value, int i, String label, int length) {
+        if (StringUtils.isBlank(value)) {
             return;
         }
 
-        if (value.length() != length)
-        {
+        if (value.length() != length) {
             throw new BaseException("第[" + (i + 2) + "]行的" + label + "长度错误[必须" + length + "个字符]");
         }
     }
@@ -156,15 +146,12 @@ public class ImportVerifyUtils
      * @param label
      * @param minLength
      */
-    public static void verifyMinLength(String value, int i, String label, int minLength)
-    {
-        if (StringUtils.isBlank(value))
-        {
+    public static void verifyMinLength(String value, int i, String label, int minLength) {
+        if (StringUtils.isBlank(value)) {
             return;
         }
 
-        if (value.length() < minLength)
-        {
+        if (value.length() < minLength) {
             throw new BaseException("第[" + (i + 2) + "]行的" + label + "长度错误[最少" + minLength + "个字符]");
         }
     }
@@ -177,15 +164,12 @@ public class ImportVerifyUtils
      * @param label
      * @param maxLength
      */
-    public static void verifyMaxLength(String value, int i, String label, int maxLength)
-    {
-        if (StringUtils.isBlank(value))
-        {
+    public static void verifyMaxLength(String value, int i, String label, int maxLength) {
+        if (StringUtils.isBlank(value)) {
             return;
         }
 
-        if (value.length() > maxLength)
-        {
+        if (value.length() > maxLength) {
             throw new BaseException("第[" + (i + 2) + "]行的" + label + "长度错误[最多" + maxLength + "个字符]");
         }
     }
@@ -198,15 +182,12 @@ public class ImportVerifyUtils
      * @param label
      * @return
      */
-    public static Integer verifyInteger(String value, int i, String label)
-    {
-        if (StringUtils.isBlank(value))
-        {
+    public static Integer verifyInteger(String value, int i, String label) {
+        if (StringUtils.isBlank(value)) {
             return null;
         }
 
-        if (StringUtils.isNumeric(value))
-        {
+        if (StringUtils.isNumeric(value)) {
             return Integer.valueOf(value);
         }
 
@@ -221,15 +202,12 @@ public class ImportVerifyUtils
      * @param label
      * @return
      */
-    public static Double verifyDouble(String value, int i, String label)
-    {
-        if (StringUtils.isBlank(value))
-        {
+    public static Double verifyDouble(String value, int i, String label) {
+        if (StringUtils.isBlank(value)) {
             return null;
         }
 
-        if (NumberUtils.isCreatable(value))
-        {
+        if (NumberUtils.isCreatable(value)) {
             return Double.valueOf(value);
         }
 
@@ -244,19 +222,14 @@ public class ImportVerifyUtils
      * @param label
      * @return
      */
-    public static LocalDate verifyLocalDate(String value, int i, String label)
-    {
-        if (StringUtils.isBlank(value))
-        {
+    public static LocalDate verifyLocalDate(String value, int i, String label) {
+        if (StringUtils.isBlank(value)) {
             return null;
         }
 
-        try
-        {
+        try {
             return LocalDate.parse(value, DateTimeFormatter.ofPattern("yyyy-M-d H:m:s"));
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             throw new BaseException("第[" + (i + 2) + "]行的" + label + "格式错误[年-月-日]");
         }
     }
@@ -270,26 +243,20 @@ public class ImportVerifyUtils
      * @param pattern
      * @return
      */
-    public static LocalDate verifyLocalDate(String value, int i, String label, String pattern)
-    {
-        if (StringUtils.isBlank(value))
-        {
+    public static LocalDate verifyLocalDate(String value, int i, String label, String pattern) {
+        if (StringUtils.isBlank(value)) {
             return null;
         }
 
         DateTimeFormatter formatter = DATE_FORMATTER;
 
-        if (StringUtils.isNotBlank(pattern))
-        {
+        if (StringUtils.isNotBlank(pattern)) {
             formatter = DateTimeFormatter.ofPattern(pattern);
         }
 
-        try
-        {
+        try {
             return LocalDate.parse(value, formatter);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             throw new BaseException("第[" + (i + 2) + "]行的" + label + "格式错误[年-月-日]");
         }
     }
@@ -302,19 +269,14 @@ public class ImportVerifyUtils
      * @param label
      * @return
      */
-    public static LocalDateTime verifyLocalDateTime(String value, int i, String label)
-    {
-        if (StringUtils.isBlank(value))
-        {
+    public static LocalDateTime verifyLocalDateTime(String value, int i, String label) {
+        if (StringUtils.isBlank(value)) {
             return null;
         }
 
-        try
-        {
+        try {
             return LocalDateTime.parse(label, DateTimeFormatter.ofPattern(value));
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             throw new BaseException("第[" + (i + 2) + "]行的" + label + "格式错误[年-月-日 时:分:秒]");
         }
     }
@@ -328,26 +290,20 @@ public class ImportVerifyUtils
      * @param pattern
      * @return
      */
-    public static LocalDateTime verifyLocalDateTime(String value, int i, String label, String pattern)
-    {
-        if (StringUtils.isBlank(value))
-        {
+    public static LocalDateTime verifyLocalDateTime(String value, int i, String label, String pattern) {
+        if (StringUtils.isBlank(value)) {
             return null;
         }
 
         DateTimeFormatter formatter = DATE_TIME_FORMATTER;
 
-        if (StringUtils.isNotBlank(pattern))
-        {
+        if (StringUtils.isNotBlank(pattern)) {
             formatter = DateTimeFormatter.ofPattern(pattern);
         }
 
-        try
-        {
+        try {
             return LocalDateTime.parse(value, formatter);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             throw new BaseException("第[" + (i + 2) + "]行的" + label + "格式错误[年-月-日 时:分:秒]");
         }
     }
@@ -360,19 +316,14 @@ public class ImportVerifyUtils
      * @param label
      * @return
      */
-    public static YearMonth verifyYearMonth(String value, int i, String label)
-    {
-        if (StringUtils.isBlank(value))
-        {
+    public static YearMonth verifyYearMonth(String value, int i, String label) {
+        if (StringUtils.isBlank(value)) {
             return null;
         }
 
-        try
-        {
+        try {
             return YearMonth.parse(value);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             throw new BaseException("第[" + (i + 2) + "]行的" + label + "格式错误[年-月]");
         }
     }
@@ -386,26 +337,20 @@ public class ImportVerifyUtils
      * @param pattern
      * @return
      */
-    public static YearMonth verifyYearMonth(String value, int i, String label, String pattern)
-    {
-        if (StringUtils.isBlank(value))
-        {
+    public static YearMonth verifyYearMonth(String value, int i, String label, String pattern) {
+        if (StringUtils.isBlank(value)) {
             return null;
         }
 
         DateTimeFormatter formatter = YEAR_MONTH_FORMATTER;
 
-        if (StringUtils.isNotBlank(pattern))
-        {
+        if (StringUtils.isNotBlank(pattern)) {
             formatter = DateTimeFormatter.ofPattern(pattern);
         }
 
-        try
-        {
+        try {
             return YearMonth.parse(value, formatter);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             throw new BaseException("第[" + (i + 2) + "]行的" + label + "格式错误[年-月]");
         }
     }

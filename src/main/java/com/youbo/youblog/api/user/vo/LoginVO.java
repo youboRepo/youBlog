@@ -9,8 +9,8 @@ import lombok.Data;
  * @date 2022/11/16
  */
 @Data
-public class LoginVO
-{
+public class LoginVO {
+
     /**
      * 用户名
      */

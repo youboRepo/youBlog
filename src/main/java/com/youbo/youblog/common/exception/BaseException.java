@@ -12,8 +12,8 @@ import java.util.Map;
  * @date 2020/4/8
  */
 @Getter
-public class BaseException extends RuntimeException
-{
+public class BaseException extends RuntimeException {
+
     /**
      * 序列化标识
      */
@@ -39,86 +39,74 @@ public class BaseException extends RuntimeException
      */
     private Map<String, String> errorMap;
 
-    public BaseException(String message)
-    {
+    public BaseException(String message) {
         super(message);
         this.message = message;
     }
 
-    public BaseException(String message, List<String> errorList)
-    {
+    public BaseException(String message, List<String> errorList) {
         super(message);
         this.message = message;
         this.errorList = errorList;
     }
 
-    public BaseException(String message, Map<String, String> errorMap)
-    {
+    public BaseException(String message, Map<String, String> errorMap) {
         super(message);
         this.message = message;
         this.errorMap = errorMap;
     }
 
-    public BaseException(String message, Throwable e)
-    {
+    public BaseException(String message, Throwable e) {
         super(message, e);
         this.message = message;
     }
 
-    public BaseException(String message, Throwable e, List<String> errorList)
-    {
+    public BaseException(String message, Throwable e, List<String> errorList) {
         super(message, e);
         this.message = message;
         this.errorList = errorList;
     }
 
-    public BaseException(String message, Throwable e, Map<String, String> errorMap)
-    {
+    public BaseException(String message, Throwable e, Map<String, String> errorMap) {
         super(message, e);
         this.message = message;
         this.errorMap = errorMap;
     }
 
-    public BaseException(int code, String message)
-    {
+    public BaseException(int code, String message) {
         super(message);
         this.code = code;
         this.message = message;
     }
 
-    public BaseException(int code, String message, List<String> errorList)
-    {
+    public BaseException(int code, String message, List<String> errorList) {
         super(message);
         this.code = code;
         this.message = message;
         this.errorList = errorList;
     }
 
-    public BaseException(int code, String message, Map<String, String> errorMap)
-    {
+    public BaseException(int code, String message, Map<String, String> errorMap) {
         super(message);
         this.code = code;
         this.message = message;
         this.errorMap = errorMap;
     }
 
-    public BaseException(int code, String message, Throwable e)
-    {
+    public BaseException(int code, String message, Throwable e) {
         super(message, e);
         this.code = code;
         this.message = message;
     }
 
-    public BaseException(int code, String message, Throwable e, List<String> errorList)
-    {
+    public BaseException(int code, String message, Throwable e, List<String> errorList) {
         super(message, e);
         this.code = code;
         this.message = message;
         this.errorList = errorList;
     }
 
-    public BaseException(int code, String message, Throwable e, Map<String, String> errorMap)
-    {
+    public BaseException(int code, String message, Throwable e, Map<String, String> errorMap) {
         super(message, e);
         this.code = code;
         this.message = message;

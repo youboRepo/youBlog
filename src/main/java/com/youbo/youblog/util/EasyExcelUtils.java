@@ -11,6 +11,7 @@ import org.apache.poi.hssf.usermodel.HSSFPatriarch;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.util.Assert;
 import org.springframework.web.multipart.MultipartFile;
+
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
@@ -34,8 +35,8 @@ import java.util.stream.Collectors;
  * @date 2020/4/15
  */
 @Slf4j
-public class EasyExcelUtils
-{
+public class EasyExcelUtils {
+
     /**
      * 导入表格
      *
@@ -46,21 +47,17 @@ public class EasyExcelUtils
      * @param <T>
      * @return
      */
-    public static <T> List<T> importExcel(MultipartFile file, Class<T> clazz, Integer sheetNo, Consumer<ExcelReaderBuilder> consumer)
-    {
-        try (InputStream input = file.getInputStream())
-        {
+    public static <T> List<T> importExcel(MultipartFile file, Class<T> clazz, Integer sheetNo,
+        Consumer<ExcelReaderBuilder> consumer) {
+        try (InputStream input = file.getInputStream()) {
             ExcelReaderBuilder builder = EasyExcel.read(input).head(clazz);
-            if (consumer != null)
-            {
+            if (consumer != null) {
                 consumer.accept(builder);
             }
             List<T> excelModels = builder.sheet(sheetNo).doReadSync();
             Assert.notEmpty(excelModels, "导入电子表格为空");
             return excelModels;
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {
             log.error(e.getMessage(), e);
             throw new BaseException("导入电子表格错误");
         }
@@ -75,8 +72,7 @@ public class EasyExcelUtils
      * @param <T>
      * @return
      */
-    public static <T> List<T> importExcel(MultipartFile file, Class<T> clazz, Consumer<ExcelReaderBuilder> consumer)
-    {
+    public static <T> List<T> importExcel(MultipartFile file, Class<T> clazz, Consumer<ExcelReaderBuilder> consumer) {
         return importExcel(file, clazz, null, consumer);
     }
 
@@ -88,8 +84,7 @@ public class EasyExcelUtils
      * @param <T>
      * @return
      */
-    public static <T> List<T> importExcel(MultipartFile file, Class<T> clazz)
-    {
+    public static <T> List<T> importExcel(MultipartFile file, Class<T> clazz) {
         return importExcel(file, clazz, null);
     }
 
@@ -100,8 +95,7 @@ public class EasyExcelUtils
      * @param sheetNo
      * @return
      */
-    public static List<List<String>> importExcel(MultipartFile file, Integer sheetNo)
-    {
+    public static List<List<String>> importExcel(MultipartFile file, Integer sheetNo) {
         List<Map<Integer, String>> data = importExcel(file, null, sheetNo, null);
         return data.stream().map(row -> new ArrayList<>(row.values())).collect(Collectors.toList());
     }
@@ -112,8 +106,7 @@ public class EasyExcelUtils
      * @param file
      * @return
      */
-    public static List<List<String>> importExcel(MultipartFile file)
-    {
+    public static List<List<String>> importExcel(MultipartFile file) {
         List<Map<Integer, String>> data = importExcel(file, null, null);
         return data.stream().map(row -> new ArrayList<>(row.values())).collect(Collectors.toList());
     }
@@ -127,22 +120,18 @@ public class EasyExcelUtils
      * @param response
      * @param consumer
      */
-    public static void exportExcel(String fileName, List<?> data, Class<?> clazz, HttpServletResponse response, Consumer<ExcelWriterBuilder> consumer)
-    {
-        try
-        {
+    public static void exportExcel(String fileName, List<?> data, Class<?> clazz, HttpServletResponse response,
+        Consumer<ExcelWriterBuilder> consumer) {
+        try {
             response.setHeader("Content-Disposition", "attachment; filename=" + URLEncoder
-                    .encode(fileName, "UTF-8") + System.currentTimeMillis() + ".xlsx");
+                .encode(fileName, "UTF-8") + System.currentTimeMillis() + ".xlsx");
             response.setContentType("application/vnd.ms-excel; charset=utf-8");
             ExcelWriterBuilder builder = EasyExcel.write(response.getOutputStream(), clazz);
-            if (consumer != null)
-            {
+            if (consumer != null) {
                 consumer.accept(builder);
             }
             builder.sheet("Sheet1").doWrite(data);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             log.error(e.getMessage(), e);
             throw new BaseException("导出电子表格错误");
         }
@@ -156,8 +145,7 @@ public class EasyExcelUtils
      * @param clazz
      * @param response
      */
-    public static void exportExcel(String fileName, List<?> data, Class<?> clazz, HttpServletResponse response)
-    {
+    public static void exportExcel(String fileName, List<?> data, Class<?> clazz, HttpServletResponse response) {
         exportExcel(fileName, data, clazz, response, null);
     }
 
@@ -178,13 +166,12 @@ public class EasyExcelUtils
      * @param col2      指定起始的单元格，下标从0开始
      * @param row2      指定起始的单元格，下标从0开始
      */
-    public static void insertImage(HSSFWorkbook workbook, HSSFPatriarch patriarch, URL url, int dx1, int dy1, int dx2, int dy2, short col1, int row1, short col2, int row2)
-    {
+    public static void insertImage(HSSFWorkbook workbook, HSSFPatriarch patriarch, URL url, int dx1, int dy1, int dx2,
+        int dy2, short col1, int row1, short col2, int row2) {
         BufferedImage bufferImage = null;
         ByteArrayOutputStream byteArrayOut = null;
 
-        try
-        {
+        try {
             bufferImage = ImageIO.read(url);
 
             // 字节输出流，用来写二进制文件
@@ -197,14 +184,10 @@ public class EasyExcelUtils
 
             // 将图片添加到Excel文件中
             patriarch.createPicture(anchor, workbook
-                    .addPicture(byteArrayOut.toByteArray(), HSSFWorkbook.PICTURE_TYPE_JPEG));
-        }
-        catch (Exception e)
-        {
+                .addPicture(byteArrayOut.toByteArray(), HSSFWorkbook.PICTURE_TYPE_JPEG));
+        } catch (Exception e) {
             throw new BaseException(e.getMessage());
-        }
-        finally
-        {
+        } finally {
             IOUtils.closeQuietly(byteArrayOut);
         }
     }
@@ -216,8 +199,7 @@ public class EasyExcelUtils
      *
      * @return String
      */
-    public static String newFileNameByTime(String filename)
-    {
+    public static String newFileNameByTime(String filename) {
         // 扩展名
         int lastDocIndex = filename.lastIndexOf(".");
         String extensionName = filename.substring(lastDocIndex + 1);

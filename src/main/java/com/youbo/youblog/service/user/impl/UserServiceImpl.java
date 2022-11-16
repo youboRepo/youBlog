@@ -17,21 +17,18 @@ import org.springframework.transaction.annotation.Transactional;
  * @date 2022/11/16
  */
 @Service
-public class UserServiceImpl extends MyServiceImpl<UserMapper, User> implements UserService
-{
+public class UserServiceImpl extends MyServiceImpl<UserMapper, User> implements UserService {
+
     @Override
-    public UserCustom getByUsername(String username)
-    {
+    public UserCustom getByUsername(String username) {
         return this.get(User::getUsername, username, UserCustom.class);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void updateUser(UserCustom user)
-    {
+    public void updateUser(UserCustom user) {
         // 密码加密处理
-        if (StringUtils.isNoneBlank(user.getPassword()))
-        {
+        if (StringUtils.isNoneBlank(user.getPassword())) {
             user.setPassword(DigestUtils.md5Hex(user.getPassword()));
         }
 

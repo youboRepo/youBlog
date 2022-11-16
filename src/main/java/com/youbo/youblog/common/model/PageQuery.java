@@ -11,8 +11,8 @@ import java.io.Serializable;
  * @date 2021/7/23
  */
 @Data
-public class PageQuery implements Serializable
-{
+public class PageQuery implements Serializable {
+
     /**
      * 序列化标识
      */

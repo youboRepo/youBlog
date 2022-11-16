@@ -19,8 +19,8 @@ import java.time.LocalDateTime;
  */
 @Data
 @TableName("t_user")
-public class User implements Serializable
-{
+public class User implements Serializable {
+
     /**
      * 序列化标识
      */
@@ -76,7 +76,6 @@ public class User implements Serializable
      * 是否删除
      */
     private Boolean isDelete;
-    
 
     /**
      * 创建人

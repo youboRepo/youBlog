@@ -20,8 +20,8 @@ import java.util.List;
  * @date 2022/11/16
  */
 @Service
-public class SecurityUserDetailsService implements UserDetailsService
-{
+public class SecurityUserDetailsService implements UserDetailsService {
+
     @Resource
     private UserService userService;
 
@@ -29,8 +29,7 @@ public class SecurityUserDetailsService implements UserDetailsService
     private PermissionService permissionService;*/
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException
-    {
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Assert.hasText(username, "用户名不能为空");
 
         // 获取用户对象
@@ -38,12 +37,11 @@ public class SecurityUserDetailsService implements UserDetailsService
 
         Assert.notNull(user, "用户名不存在");
         Assert.isTrue(user.getEnabled(), "用户已禁用");
-        
 
         // 用户角色权限
         //Integer userId = isAdmin ? null : user.getId();
-        List<GrantedAuthority> authorities = new ArrayList<>(); 
-                //permissionService.getAuthPermissionCode(userId).stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        //permissionService.getAuthPermissionCode(userId).stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
 
         // 创建安全用户
         SecurityUser securityUser = new SecurityUser(user, authorities);

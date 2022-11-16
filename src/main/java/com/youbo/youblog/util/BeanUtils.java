@@ -2,6 +2,7 @@ package com.youbo.youblog.util;
 
 import com.youbo.youblog.common.exception.BaseException;
 import org.springframework.cglib.beans.BeanCopier;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -14,8 +15,8 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author youxiaobo
  * @date 2019/11/13
  */
-public class BeanUtils
-{
+public class BeanUtils {
+
     /**
      * 缓存对象克隆实例对象
      */
@@ -29,19 +30,15 @@ public class BeanUtils
      * @param <T>
      * @return
      */
-    public static <T> T clone(Object source, Class<T> targetClass)
-    {
-        if (source == null)
-        {
+    public static <T> T clone(Object source, Class<T> targetClass) {
+        if (source == null) {
             return null;
         }
 
-        try
-        {
+        try {
             String key = source.getClass().getName() + targetClass.getName();
             BeanCopier beanCopier = BEAN_COPIER_MAP.get(key);
-            if (beanCopier == null)
-            {
+            if (beanCopier == null) {
                 beanCopier = BeanCopier.create(source.getClass(), targetClass, false);
                 BEAN_COPIER_MAP.put(key, beanCopier);
             }
@@ -50,9 +47,7 @@ public class BeanUtils
             beanCopier.copy(source, target, null);
 
             return target;
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             throw new BaseException(e.getMessage(), e);
         }
     }
@@ -65,17 +60,14 @@ public class BeanUtils
      * @param <T>
      * @return
      */
-    public static <T> List<T> clone(Collection<?> sourceList, Class<T> targetClass)
-    {
-        if (sourceList == null)
-        {
+    public static <T> List<T> clone(Collection<?> sourceList, Class<T> targetClass) {
+        if (sourceList == null) {
             return null;
         }
 
         List<T> targetList = new ArrayList<>(sourceList.size());
 
-        for (Object source : sourceList)
-        {
+        for (Object source : sourceList) {
             T target = clone(source, targetClass);
             targetList.add(target);
         }

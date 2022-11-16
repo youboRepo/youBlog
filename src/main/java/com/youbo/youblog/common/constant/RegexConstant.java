@@ -6,8 +6,8 @@ package com.youbo.youblog.common.constant;
  * @author youxiaobo
  * @date 2021/3/17
  */
-public interface RegexConstant
-{
+public interface RegexConstant {
+
     /**
      * 不是中文
      */

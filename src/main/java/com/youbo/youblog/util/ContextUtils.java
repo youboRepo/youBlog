@@ -3,6 +3,7 @@ package com.youbo.youblog.util;
 import cn.hutool.core.map.MapUtil;
 import com.youbo.youblog.common.constant.ContextKey;
 import org.apache.commons.lang3.math.NumberUtils;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -15,22 +16,19 @@ import java.util.function.Supplier;
  * @author youxiaobo
  * @date 2020/8/20
  */
-public class ContextUtils
-{
+public class ContextUtils {
+
     /**
      * 本地线程变量
      */
-    private static final ThreadLocal<Map<String, String>> THREAD_LOCAL = new InheritableThreadLocal<Map<String, String>>()
-    {
+    private static final ThreadLocal<Map<String, String>> THREAD_LOCAL = new InheritableThreadLocal<Map<String, String>>() {
         @Override
-        protected synchronized Map<String, String> initialValue()
-        {
+        protected synchronized Map<String, String> initialValue() {
             return MapUtil.newHashMap();
         }
 
         @Override
-        protected Map<String, String> childValue(Map<String, String> parentValue)
-        {
+        protected Map<String, String> childValue(Map<String, String> parentValue) {
             return Optional.ofNullable(parentValue).map(HashMap::new).orElse(null);
         }
     };
@@ -41,8 +39,7 @@ public class ContextUtils
      * @param key
      * @return
      */
-    public static String getContext(String key)
-    {
+    public static String getContext(String key) {
         return THREAD_LOCAL.get().get(key);
     }
 
@@ -52,10 +49,9 @@ public class ContextUtils
      * @param key
      * @return
      */
-    public static Integer getIntegerContext(String key)
-    {
+    public static Integer getIntegerContext(String key) {
         return Optional.ofNullable(key).map(ContextUtils::getContext).filter(NumberUtils::isDigits)
-                .map(Integer::valueOf).orElse(null);
+            .map(Integer::valueOf).orElse(null);
     }
 
     /**
@@ -64,8 +60,7 @@ public class ContextUtils
      * @param key
      * @param value
      */
-    public static void setContext(String key, String value)
-    {
+    public static void setContext(String key, String value) {
         THREAD_LOCAL.get().put(key, value);
     }
 
@@ -75,14 +70,10 @@ public class ContextUtils
      * @param key
      * @param value
      */
-    public static void setIntegerContext(String key, Integer value)
-    {
-        if (value != null)
-        {
+    public static void setIntegerContext(String key, Integer value) {
+        if (value != null) {
             setContext(key, value.toString());
-        }
-        else
-        {
+        } else {
             removeContext(key);
         }
     }
@@ -92,16 +83,14 @@ public class ContextUtils
      *
      * @param key
      */
-    public static void removeContext(String key)
-    {
+    public static void removeContext(String key) {
         THREAD_LOCAL.get().remove(key);
     }
 
     /**
      * 清除本地上下文参数
      */
-    public static void clearContext()
-    {
+    public static void clearContext() {
         THREAD_LOCAL.get().clear();
     }
 
@@ -110,8 +99,7 @@ public class ContextUtils
      *
      * @return
      */
-    public static Integer getUserId()
-    {
+    public static Integer getUserId() {
         return getIntegerContext(ContextKey.USER_ID);
     }
 
@@ -121,8 +109,7 @@ public class ContextUtils
      * @param defaultValue
      * @return
      */
-    public static Integer getUserId(Integer defaultValue)
-    {
+    public static Integer getUserId(Integer defaultValue) {
         return Optional.ofNullable(getUserId()).orElse(defaultValue);
     }
 
@@ -132,8 +119,7 @@ public class ContextUtils
      * @param supplier
      * @return
      */
-    public static Integer getUserId(Supplier<Integer> supplier)
-    {
+    public static Integer getUserId(Supplier<Integer> supplier) {
         return Optional.ofNullable(getUserId()).orElseGet(supplier);
     }
 
@@ -142,8 +128,7 @@ public class ContextUtils
      *
      * @param userId
      */
-    public static void setUserId(Integer userId)
-    {
+    public static void setUserId(Integer userId) {
         setIntegerContext(ContextKey.USER_ID, userId);
     }
 
@@ -152,8 +137,7 @@ public class ContextUtils
      *
      * @param consumer
      */
-    public static void setUserId(Consumer<Integer> consumer)
-    {
+    public static void setUserId(Consumer<Integer> consumer) {
         Optional.ofNullable(getUserId()).ifPresent(consumer);
     }
 
@@ -162,8 +146,7 @@ public class ContextUtils
      *
      * @return
      */
-    public static String getUsername()
-    {
+    public static String getUsername() {
         return getContext(ContextKey.USERNAME);
     }
 
@@ -172,8 +155,7 @@ public class ContextUtils
      *
      * @param username
      */
-    public static void setUsername(String username)
-    {
+    public static void setUsername(String username) {
         setContext(ContextKey.USERNAME, username);
     }
 
@@ -182,8 +164,7 @@ public class ContextUtils
      *
      * @return
      */
-    public static String getName()
-    {
+    public static String getName() {
         return getContext(ContextKey.NAME);
     }
 
@@ -192,8 +173,7 @@ public class ContextUtils
      *
      * @param name
      */
-    public static void setName(String name)
-    {
+    public static void setName(String name) {
         setContext(ContextKey.NAME, name);
     }
 
@@ -202,8 +182,7 @@ public class ContextUtils
      *
      * @return
      */
-    public static Integer getSupplierId()
-    {
+    public static Integer getSupplierId() {
         return getIntegerContext(ContextKey.SUPPLIER_ID);
     }
 
@@ -212,8 +191,7 @@ public class ContextUtils
      *
      * @param supplierId
      */
-    public static void setSupplierId(Integer supplierId)
-    {
+    public static void setSupplierId(Integer supplierId) {
         setIntegerContext(ContextKey.SUPPLIER_ID, supplierId);
     }
 
@@ -222,8 +200,7 @@ public class ContextUtils
      *
      * @return
      */
-    public static String getSupplierNumber()
-    {
+    public static String getSupplierNumber() {
         return getContext(ContextKey.SUPPLIER_NUMBER);
     }
 
@@ -232,8 +209,7 @@ public class ContextUtils
      *
      * @param supplierNumber
      */
-    public static void setSupplierNumber(String supplierNumber)
-    {
+    public static void setSupplierNumber(String supplierNumber) {
         setContext(ContextKey.SUPPLIER_NUMBER, supplierNumber);
     }
 
@@ -242,8 +218,7 @@ public class ContextUtils
      *
      * @return
      */
-    public static Integer getUserType()
-    {
+    public static Integer getUserType() {
         return getIntegerContext(ContextKey.USER_TYPE);
     }
 
@@ -252,8 +227,7 @@ public class ContextUtils
      *
      * @param userType
      */
-    public static void setUserType(Integer userType)
-    {
+    public static void setUserType(Integer userType) {
         setIntegerContext(ContextKey.USER_TYPE, userType);
     }
 }

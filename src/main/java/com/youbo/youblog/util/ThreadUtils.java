@@ -3,6 +3,7 @@ package com.youbo.youblog.util;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import com.youbo.youblog.common.exception.BaseException;
 import lombok.extern.slf4j.Slf4j;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -19,15 +20,14 @@ import java.util.concurrent.TimeUnit;
  * @date 2020/1/14
  */
 @Slf4j
-public class ThreadUtils
-{
+public class ThreadUtils {
+
     /**
      * 线程等待不限时间
      *
      * @param executor
      */
-    public static void await(ExecutorService executor)
-    {
+    public static void await(ExecutorService executor) {
         await(executor, Long.MAX_VALUE);
     }
 
@@ -36,15 +36,11 @@ public class ThreadUtils
      *
      * @param executor
      */
-    public static void await(ExecutorService executor, long timeout)
-    {
-        try
-        {
+    public static void await(ExecutorService executor, long timeout) {
+        try {
             executor.shutdown();
             executor.awaitTermination(timeout, TimeUnit.SECONDS);
-        }
-        catch (InterruptedException e)
-        {
+        } catch (InterruptedException e) {
             log.error(e.getMessage(), e);
             throw new BaseException("线程等待错误");
         }
@@ -57,23 +53,17 @@ public class ThreadUtils
      * @param <T>
      * @return
      */
-    public static <T> T getFuture(Future<T> future)
-    {
-        try
-        {
+    public static <T> T getFuture(Future<T> future) {
+        try {
             return future.get(300, TimeUnit.SECONDS);
-        }
-        catch (Throwable e)
-        {
-            if (e.getCause() != null)
-            {
+        } catch (Throwable e) {
+            if (e.getCause() != null) {
                 e = e.getCause();
             }
 
             log.error(e.getMessage(), e);
 
-            if (e instanceof BaseException)
-            {
+            if (e instanceof BaseException) {
                 throw (BaseException) e;
             }
 
@@ -88,11 +78,9 @@ public class ThreadUtils
      * @param <T>
      * @return
      */
-    public static <T> List<T> getFutureList(List<Future<T>> futures)
-    {
+    public static <T> List<T> getFutureList(List<Future<T>> futures) {
         List<T> results = new ArrayList<>();
-        for (Future<T> future : futures)
-        {
+        for (Future<T> future : futures) {
             T result = getFuture(future);
             results.add(result);
         }
@@ -104,14 +92,10 @@ public class ThreadUtils
      *
      * @param millis
      */
-    public static void sleep(long millis)
-    {
-        try
-        {
+    public static void sleep(long millis) {
+        try {
             Thread.sleep(millis);
-        }
-        catch (InterruptedException e)
-        {
+        } catch (InterruptedException e) {
             log.error(e.getMessage(), e);
             throw new BaseException("线程休眠错误");
         }
@@ -124,9 +108,9 @@ public class ThreadUtils
      * @param name
      * @return
      */
-    public static ThreadPoolExecutor newFixedThreadPool(int size, String name)
-    {
+    public static ThreadPoolExecutor newFixedThreadPool(int size, String name) {
         ThreadFactory threadFactory = new ThreadFactoryBuilder().setNameFormat(name + "-pool-%d").build();
-        return new ThreadPoolExecutor(size, size, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>(), threadFactory);
+        return new ThreadPoolExecutor(size, size, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>(),
+            threadFactory);
     }
 }

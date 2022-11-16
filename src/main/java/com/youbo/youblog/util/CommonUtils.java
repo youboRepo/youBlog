@@ -12,6 +12,7 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.Assert;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
@@ -34,8 +35,8 @@ import java.util.stream.Collectors;
  * @author youxiaobo
  * @date 2019/12/26
  */
-public class CommonUtils
-{
+public class CommonUtils {
+
     /**
      * 默认分隔正则
      */
@@ -44,18 +45,15 @@ public class CommonUtils
     /**
      * 排重集合容器
      */
-    private static final Set<String> set = new LinkedHashSet<String>()
-    {
+    private static final Set<String> set = new LinkedHashSet<String>() {
         /**
          * 序列化标识
          */
         private static final long serialVersionUID = 1L;
 
         @Override
-        public synchronized boolean add(String e)
-        {
-            if (this.size() > 1000)
-            {
+        public synchronized boolean add(String e) {
+            if (this.size() > 1000) {
                 this.stream().findFirst().ifPresent(this::remove);
             }
             return super.add(e);
@@ -68,16 +66,12 @@ public class CommonUtils
      * @param a
      * @param b
      */
-    public static void removeIntersectElement(List<String> a, List<String> b)
-    {
-        if (CollectionUtils.isNotEmpty(a) && CollectionUtils.isNotEmpty(b))
-        {
+    public static void removeIntersectElement(List<String> a, List<String> b) {
+        if (CollectionUtils.isNotEmpty(a) && CollectionUtils.isNotEmpty(b)) {
             Iterator<String> it = a.iterator();
-            while (it.hasNext())
-            {
+            while (it.hasNext()) {
                 String c = it.next();
-                if (b.remove(c))
-                {
+                if (b.remove(c)) {
                     it.remove();
                 }
             }
@@ -91,11 +85,9 @@ public class CommonUtils
      * @param regex
      * @return
      */
-    public static List<String> splitStringList(String text, String regex)
-    {
+    public static List<String> splitStringList(String text, String regex) {
         String[] split = StringUtils.split(text, regex);
-        if (split == null)
-        {
+        if (split == null) {
             return Lists.newArrayList();
         }
         return Arrays.stream(split).collect(Collectors.toList());
@@ -107,8 +99,7 @@ public class CommonUtils
      * @param text
      * @return
      */
-    public static List<String> splitStringList(String text)
-    {
+    public static List<String> splitStringList(String text) {
         return splitStringList(text, DEFAULT_SPLIT_REGEX);
     }
 
@@ -119,11 +110,9 @@ public class CommonUtils
      * @param regex
      * @return
      */
-    public static List<Integer> splitIntegerList(String text, String regex)
-    {
+    public static List<Integer> splitIntegerList(String text, String regex) {
         String[] split = StringUtils.split(text, regex);
-        if (split == null)
-        {
+        if (split == null) {
             return Lists.newArrayList();
         }
         return Arrays.stream(split).filter(StringUtils::isNumeric).map(Integer::valueOf).collect(Collectors.toList());
@@ -135,8 +124,7 @@ public class CommonUtils
      * @param text
      * @return
      */
-    public static List<Integer> splitIntegerList(String text)
-    {
+    public static List<Integer> splitIntegerList(String text) {
         return splitIntegerList(text, DEFAULT_SPLIT_REGEX);
     }
 
@@ -147,11 +135,9 @@ public class CommonUtils
      * @param regex
      * @return
      */
-    public static List<Long> splitLongList(String text, String regex)
-    {
+    public static List<Long> splitLongList(String text, String regex) {
         String[] split = StringUtils.split(text, regex);
-        if (split == null)
-        {
+        if (split == null) {
             return Lists.newArrayList();
         }
         return Arrays.stream(split).filter(StringUtils::isNumeric).map(Long::valueOf).collect(Collectors.toList());
@@ -163,8 +149,7 @@ public class CommonUtils
      * @param text
      * @return
      */
-    public static List<Long> splitLongList(String text)
-    {
+    public static List<Long> splitLongList(String text) {
         return splitLongList(text, DEFAULT_SPLIT_REGEX);
     }
 
@@ -175,14 +160,10 @@ public class CommonUtils
      * @param suffix
      * @return
      */
-    public static File createTempFile(String prefix, String suffix)
-    {
-        try
-        {
+    public static File createTempFile(String prefix, String suffix) {
+        try {
             return File.createTempFile(prefix, suffix);
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {
             throw new BaseException(e.getMessage(), e);
         }
     }
@@ -193,10 +174,8 @@ public class CommonUtils
      * @param text
      * @return
      */
-    public static Map<String, String> toMap(String text)
-    {
-        return JSON.parseObject(text, new TypeReference<Map<String, String>>()
-        {
+    public static Map<String, String> toMap(String text) {
+        return JSON.parseObject(text, new TypeReference<Map<String, String>>() {
         });
     }
 
@@ -206,10 +185,8 @@ public class CommonUtils
      * @param text
      * @return
      */
-    public static Map<Integer, String> toIntegerStringMap(String text)
-    {
-        return JSON.parseObject(text, new TypeReference<Map<Integer, String>>()
-        {
+    public static Map<Integer, String> toIntegerStringMap(String text) {
+        return JSON.parseObject(text, new TypeReference<Map<Integer, String>>() {
         });
     }
 
@@ -219,10 +196,8 @@ public class CommonUtils
      * @param text
      * @return
      */
-    public static Map<String, String> toLinkedHashMap(String text)
-    {
-        return JSON.parseObject(text, new TypeReference<LinkedHashMap<String, String>>()
-        {
+    public static Map<String, String> toLinkedHashMap(String text) {
+        return JSON.parseObject(text, new TypeReference<LinkedHashMap<String, String>>() {
         });
     }
 
@@ -232,10 +207,9 @@ public class CommonUtils
      * @param text
      * @return
      */
-    public static String formatSentence(String text)
-    {
+    public static String formatSentence(String text) {
         return CommonUtils.splitStringList(text, " ").stream().filter(StringUtils::isNotBlank).map(StringUtils::trim)
-                .map(StrUtil::upperFirst).collect(Collectors.joining(" "));
+            .map(StrUtil::upperFirst).collect(Collectors.joining(" "));
     }
 
     /**
@@ -245,23 +219,17 @@ public class CommonUtils
      * @param maxLength
      * @return
      */
-    public static String limitLength(String text, int maxLength)
-    {
-        if (StringUtils.isBlank(text))
-        {
+    public static String limitLength(String text, int maxLength) {
+        if (StringUtils.isBlank(text)) {
             return text;
         }
 
         text = text.trim().replaceAll(RegexConstant.MULTI_BLANK, " ");
 
-        while (text.length() > maxLength)
-        {
-            if (text.contains(" "))
-            {
+        while (text.length() > maxLength) {
+            if (text.contains(" ")) {
                 text = StringUtils.substringBeforeLast(text, " ");
-            }
-            else
-            {
+            } else {
                 text = StringUtils.substring(text, 0, maxLength);
             }
         }
@@ -276,15 +244,12 @@ public class CommonUtils
      * @param count
      * @return
      */
-    public static String randomAlphanumeric(String prefix, int count)
-    {
+    public static String randomAlphanumeric(String prefix, int count) {
         Assert.hasText(prefix, "前缀不能为空");
 
-        while (true)
-        {
+        while (true) {
             String text = prefix + RandomStringUtils.randomAlphanumeric(count);
-            if (set.add(text.toUpperCase()))
-            {
+            if (set.add(text.toUpperCase())) {
                 return text;
             }
         }
@@ -297,10 +262,8 @@ public class CommonUtils
      * @param <R>
      * @return
      */
-    public static <R> R get(Supplier<R> action)
-    {
-        if (action == null)
-        {
+    public static <R> R get(Supplier<R> action) {
+        if (action == null) {
             return null;
         }
 
@@ -316,10 +279,8 @@ public class CommonUtils
      * @param <R>
      * @return
      */
-    public static <T, R> R get(T t, Function<T, R> action)
-    {
-        if (ObjectUtil.hasEmpty(t, action))
-        {
+    public static <T, R> R get(T t, Function<T, R> action) {
+        if (ObjectUtil.hasEmpty(t, action)) {
             return null;
         }
 
@@ -337,10 +298,8 @@ public class CommonUtils
      * @param <R>
      * @return
      */
-    public static <T, U, R> R get(T t, U u, BiFunction<T, U, R> action)
-    {
-        if (ObjectUtil.hasEmpty(t, u, action))
-        {
+    public static <T, U, R> R get(T t, U u, BiFunction<T, U, R> action) {
+        if (ObjectUtil.hasEmpty(t, u, action)) {
             return null;
         }
 
@@ -354,18 +313,12 @@ public class CommonUtils
      * @param <R>
      * @return
      */
-    public static <R> R tryCatch(ThrowExceptionSupplier<R> action)
-    {
-        try
-        {
+    public static <R> R tryCatch(ThrowExceptionSupplier<R> action) {
+        try {
             return action.get();
-        }
-        catch (BaseException e)
-        {
+        } catch (BaseException e) {
             throw e;
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             throw new BaseException(e.getMessage(), e);
         }
     }
@@ -377,8 +330,7 @@ public class CommonUtils
      * @param <T>
      * @return
      */
-    public static <T> Predicate<T> distinct(Function<T, ?> function)
-    {
+    public static <T> Predicate<T> distinct(Function<T, ?> function) {
         Set<Object> set = ConcurrentHashMap.newKeySet();
         return t -> set.add(function.apply(t));
     }
@@ -390,8 +342,7 @@ public class CommonUtils
      * @param <T>
      * @return
      */
-    public static <T> Predicate<T> negate(Predicate<T> predicate)
-    {
+    public static <T> Predicate<T> negate(Predicate<T> predicate) {
         return predicate.negate();
     }
 
@@ -402,8 +353,7 @@ public class CommonUtils
      * @param <T>
      * @return
      */
-    public static <T> Predicate<T> isEmpty(Function<T, ?> function)
-    {
+    public static <T> Predicate<T> isEmpty(Function<T, ?> function) {
         return t -> ObjectUtil.isEmpty(function.apply(t));
     }
 
@@ -414,8 +364,7 @@ public class CommonUtils
      * @param <T>
      * @return
      */
-    public static <T> Predicate<T> isNotEmpty(Function<T, ?> function)
-    {
+    public static <T> Predicate<T> isNotEmpty(Function<T, ?> function) {
         return t -> ObjectUtil.isNotEmpty(function.apply(t));
     }
 }

@@ -6,8 +6,8 @@ package com.youbo.youblog.common.constant;
  * @author youxiaobo
  * @date 2022/10/08
  */
-public interface OauthConstant
-{
+public interface OauthConstant {
+
     String CLIENT_ID = "client_id";
 
     String ACCESS_TOKEN = "access_token";

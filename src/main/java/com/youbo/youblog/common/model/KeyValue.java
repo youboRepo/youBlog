@@ -15,8 +15,8 @@ import java.io.Serializable;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class KeyValue<K, V> implements Serializable
-{
+public class KeyValue<K, V> implements Serializable {
+
     /**
      * 序列化标识
      */
@@ -32,8 +32,7 @@ public class KeyValue<K, V> implements Serializable
      */
     private V value;
 
-    public static <K, V> KeyValue<K, V> with(K key, V value)
-    {
+    public static <K, V> KeyValue<K, V> with(K key, V value) {
         return new KeyValue<>(key, value);
     }
 }

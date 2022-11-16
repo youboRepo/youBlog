@@ -46,35 +46,33 @@ public class LoginController {
 
     @Resource
     private StringRedisTemplate stringRedisTemplate;
-    
+
     @Resource
     private UserService userService;
-    
+
     @PostMapping("login")
-    public Response<String> login(@RequestBody LoginVO loginVO, HttpSession session, HttpServletRequest request) throws IOException {
-        
+    public Response<String> login(@RequestBody LoginVO loginVO, HttpSession session, HttpServletRequest request)
+        throws IOException {
+
         // 校验验证码
-        String realKaptcha = (String)session.getAttribute(Constants.KAPTCHA_SESSION_KEY);
+        String realKaptcha = (String) session.getAttribute(Constants.KAPTCHA_SESSION_KEY);
         this.verifyKaptcha(loginVO.getKaptcha(), realKaptcha);
 
         String username = loginVO.getUsername();
         String password = loginVO.getPassword();
         Authentication authentication = null;
 
-        try
-        {
+        try {
             // 校验用户密码
-            UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(username, password);
+            UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
+                username, password);
             authentication = authenticationManager.authenticate(usernamePasswordAuthenticationToken);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             log.error(e.getMessage());
             throw new BaseException(e.getMessage());
         }
 
-        if (authentication == null || !authentication.isAuthenticated())
-        {
+        if (authentication == null || !authentication.isAuthenticated()) {
             throw new BaseException("登录失败，联系管理员");
         }
 
@@ -84,7 +82,8 @@ public class LoginController {
 
         // 保存到Redis
         Optional.ofNullable(request.getHeader(jwtProperties.getTokenHeader())).ifPresent(stringRedisTemplate::delete);
-        stringRedisTemplate.opsForValue().set(token, JSON.toJSONString(securityUser, SerializerFeature.WriteClassName), 2L, TimeUnit.HOURS);
+        stringRedisTemplate.opsForValue()
+            .set(token, JSON.toJSONString(securityUser, SerializerFeature.WriteClassName), 2L, TimeUnit.HOURS);
 
         // 修改登录时间
         Optional.ofNullable(securityUser.getId()).ifPresent(id -> {
@@ -96,8 +95,7 @@ public class LoginController {
 
         // 获取真实客户端IP地址
         String ipAddress = request.getHeader("X-Real-IP");
-        if (org.apache.commons.lang3.StringUtils.isBlank(ipAddress))
-        {
+        if (org.apache.commons.lang3.StringUtils.isBlank(ipAddress)) {
             ipAddress = request.getRemoteAddr();
         }
 
@@ -117,16 +115,13 @@ public class LoginController {
      * @param kaptcha
      * @param realKaptcha
      */
-    private void verifyKaptcha(String kaptcha, String realKaptcha)
-    {
-        if (StringUtils.isBlank(kaptcha) || StringUtils.isBlank(realKaptcha))
-        {
+    private void verifyKaptcha(String kaptcha, String realKaptcha) {
+        if (StringUtils.isBlank(kaptcha) || StringUtils.isBlank(realKaptcha)) {
             throw new BaseException("请输入验证码");
         }
 
         // 比较验证码
-        if (!StringUtils.equalsIgnoreCase(realKaptcha, kaptcha))
-        {
+        if (!StringUtils.equalsIgnoreCase(realKaptcha, kaptcha)) {
             throw new BaseException("验证码错误");
         }
     }

@@ -7,8 +7,8 @@ package com.youbo.youblog.common.exception;
  * @date 2021/2/5
  */
 @FunctionalInterface
-public interface ThrowExceptionSupplier<T>
-{
+public interface ThrowExceptionSupplier<T> {
+
     /**
      * 返回一个结果
      *

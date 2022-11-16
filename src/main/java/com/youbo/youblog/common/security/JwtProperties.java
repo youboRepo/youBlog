@@ -17,8 +17,8 @@ import java.util.Date;
 @Data
 @Component
 @ConfigurationProperties(prefix = "jwt")
-public class JwtProperties
-{
+public class JwtProperties {
+
     /**
      * 密钥KEY
      */
@@ -50,10 +50,9 @@ public class JwtProperties
      * @param username
      * @return
      */
-    public String getToken(String username)
-    {
+    public String getToken(String username) {
         return startWith + Jwts.builder().setId(username)
-                .setExpiration(new Date(System.currentTimeMillis() + expiration))
-                .signWith(SignatureAlgorithm.HS256, secret).compact();
+            .setExpiration(new Date(System.currentTimeMillis() + expiration))
+            .signWith(SignatureAlgorithm.HS256, secret).compact();
     }
 }

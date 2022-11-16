@@ -15,11 +15,10 @@ import java.lang.reflect.Type;
  * @author Administrator
  * @date 2022/11/2 0002
  */
-public class GrantedAuthorityDeserializer implements ObjectDeserializer
-{
+public class GrantedAuthorityDeserializer implements ObjectDeserializer {
+
     @Override
-    public SwitchUserGrantedAuthority deserialze(DefaultJSONParser defaultJSONParser, Type type, Object o)
-    {
+    public SwitchUserGrantedAuthority deserialze(DefaultJSONParser defaultJSONParser, Type type, Object o) {
         JSONObject jsonObject = defaultJSONParser.parseObject();
         String authority = Convert.toStr(jsonObject.get("authority"));
         Authentication source = Convert.convert(Authentication.class, jsonObject.get("source"));
@@ -27,8 +26,7 @@ public class GrantedAuthorityDeserializer implements ObjectDeserializer
     }
 
     @Override
-    public int getFastMatchToken()
-    {
+    public int getFastMatchToken() {
         return 0;
     }
 }

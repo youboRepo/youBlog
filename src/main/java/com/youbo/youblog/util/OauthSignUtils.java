@@ -3,6 +3,7 @@ package com.youbo.youblog.util;
 
 import com.youbo.youblog.common.constant.OauthConstant;
 import org.apache.commons.lang3.StringUtils;
+
 import javax.crypto.Mac;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
@@ -17,8 +18,7 @@ import java.util.Map;
  * @author youxiaobo
  * @date 2022/10/11
  */
-public class OauthSignUtils
-{
+public class OauthSignUtils {
 
     /**
      * 请求参数签名
@@ -29,31 +29,25 @@ public class OauthSignUtils
      * @return
      * @throws IOException
      */
-    public static String signRequest(Map<String, String> params, String secret, String signMethod) throws IOException
-    {
+    public static String signRequest(Map<String, String> params, String secret, String signMethod) throws IOException {
         // 第一步：检查参数是否已经排序
         String[] keys = params.keySet().toArray(new String[0]);
         Arrays.sort(keys);
 
         // 第二步：把所有参数名和参数值串在一起
         StringBuilder query = new StringBuilder();
-        for (String key : keys)
-        {
+        for (String key : keys) {
             String value = params.get(key);
-            if (StringUtils.isNotEmpty(key) && StringUtils.isNotEmpty(value))
-            {
+            if (StringUtils.isNotEmpty(key) && StringUtils.isNotEmpty(value)) {
                 query.append(key).append(value);
             }
         }
 
         // 第三步：使用hmac_md5加密
         byte[] bytes;
-        if (OauthConstant.SIGN_METHOD_HMAC.equals(signMethod))
-        {
+        if (OauthConstant.SIGN_METHOD_HMAC.equals(signMethod)) {
             bytes = encryptHMAC(query.toString(), secret);
-        }
-        else
-        {
+        } else {
             // 默认hmac_md5加密
             bytes = encryptHMAC(query.toString(), secret);
         }
@@ -70,18 +64,14 @@ public class OauthSignUtils
      * @return
      * @throws IOException
      */
-    private static byte[] encryptHMAC(String data, String secret) throws IOException
-    {
+    private static byte[] encryptHMAC(String data, String secret) throws IOException {
         byte[] bytes = null;
-        try
-        {
+        try {
             SecretKey secretKey = new SecretKeySpec(secret.getBytes(OauthConstant.CHARSET_UTF8), "HmacMD5");
             Mac mac = Mac.getInstance(secretKey.getAlgorithm());
             mac.init(secretKey);
             bytes = mac.doFinal(data.getBytes(OauthConstant.CHARSET_UTF8));
-        }
-        catch (GeneralSecurityException gse)
-        {
+        } catch (GeneralSecurityException gse) {
             throw new IOException(gse.toString());
         }
         return bytes;
@@ -93,14 +83,11 @@ public class OauthSignUtils
      * @param bytes
      * @return
      */
-    public static String byte2hex(byte[] bytes)
-    {
+    public static String byte2hex(byte[] bytes) {
         StringBuilder sign = new StringBuilder();
-        for (int i = 0; i < bytes.length; i++)
-        {
+        for (int i = 0; i < bytes.length; i++) {
             String hex = Integer.toHexString(bytes[i] & 0xFF);
-            if (hex.length() == 1)
-            {
+            if (hex.length() == 1) {
                 sign.append("0");
             }
             sign.append(hex.toUpperCase());

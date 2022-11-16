@@ -48,8 +48,8 @@ import java.util.stream.Collectors;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter
-{
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
     @Resource
     private JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter;
 
@@ -63,29 +63,31 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
     private StringRedisTemplate stringRedisTemplate;
 
     @Override
-    protected void configure(HttpSecurity http) throws Exception
-    {
+    protected void configure(HttpSecurity http) throws Exception {
         //http相关的配置，包括登入登出、异常处理、会话管理等
-        http.cors().and().csrf().disable().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests().antMatchers("/kaptcha.jpg", "/login", "/rest", "/barcode2d").anonymous().anyRequest().authenticated().and().userDetailsService(securityUserDetailsService).addFilter(switchUserFilter()).addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class).logout().logoutUrl("/logout").logoutSuccessHandler(logoutSuccessHandler()).and().exceptionHandling().authenticationEntryPoint(MyAuthenticationEntryPoint()).accessDeniedHandler(accessDeniedHandler());
+        http.cors().and().csrf().disable().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            .and().authorizeRequests().antMatchers("/kaptcha.jpg", "/login", "/rest", "/barcode2d").anonymous()
+            .anyRequest().authenticated().and().userDetailsService(securityUserDetailsService)
+            .addFilter(switchUserFilter())
+            .addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class).logout()
+            .logoutUrl("/logout").logoutSuccessHandler(logoutSuccessHandler()).and().exceptionHandling()
+            .authenticationEntryPoint(MyAuthenticationEntryPoint()).accessDeniedHandler(accessDeniedHandler());
     }
 
     @Bean
     @Override
-    public AuthenticationManager authenticationManager() throws Exception
-    {
+    public AuthenticationManager authenticationManager() throws Exception {
         return super.authenticationManager();
     }
 
     @Bean
-    public Md5PasswordEncoder passwordEncoder()
-    {
+    public Md5PasswordEncoder passwordEncoder() {
         // 设置默认的加密方式（强hash方式加密）
         return new Md5PasswordEncoder();
     }
 
     @Bean
-    public SwitchUserFilter switchUserFilter()
-    {
+    public SwitchUserFilter switchUserFilter() {
         SwitchUserFilter switchUserFilter = new SwitchUserFilter();
         switchUserFilter.setUserDetailsService(securityUserDetailsService);
         switchUserFilter.setSuccessHandler((request, response, authentication) -> {
@@ -95,10 +97,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
             SecurityUser newSecurityUser = new SecurityUser(securityUser.getUser(), authorities);
             newSecurityUser.setId(securityUser.getId());
             newSecurityUser.setName(securityUser.getName());
-            
+
             // 保存到Redis
             Optional.ofNullable(request.getHeader(jwtProperties.getTokenHeader())).ifPresent(token -> {
-                stringRedisTemplate.opsForValue().set(token, JSON.toJSONString(newSecurityUser, SerializerFeature.WriteClassName, SerializerFeature.DisableCircularReferenceDetect), 1L, TimeUnit.HOURS);
+                stringRedisTemplate.opsForValue().set(token,
+                    JSON.toJSONString(newSecurityUser, SerializerFeature.WriteClassName,
+                        SerializerFeature.DisableCircularReferenceDetect), 1L, TimeUnit.HOURS);
             });
 
             // 设置响应信息
@@ -114,8 +118,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
     }
 
     @Bean
-    public LogoutSuccessHandler logoutSuccessHandler()
-    {
+    public LogoutSuccessHandler logoutSuccessHandler() {
         // 登出成功处理
         return (request, response, authentication) -> {
             // 设置响应信息
@@ -128,8 +131,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
     }
 
     @Bean
-    public AuthenticationEntryPoint MyAuthenticationEntryPoint()
-    {
+    public AuthenticationEntryPoint MyAuthenticationEntryPoint() {
         return (HttpServletRequest request, HttpServletResponse response, AuthenticationException e) -> {
             // 设置响应信息
             response.setContentType(ContentType.JSON.toString(StandardCharsets.UTF_8));
@@ -138,8 +140,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
     }
 
     @Bean
-    public AccessDeniedHandler accessDeniedHandler()
-    {
+    public AccessDeniedHandler accessDeniedHandler() {
         // 拒绝访问处理
         return (request, response, accessDeniedException) -> {
             // 设置响应格式以及编码
@@ -150,8 +151,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
     }
 
     @Bean
-    public ServletRegistrationBean kaptchaServlet()
-    {
+    public ServletRegistrationBean kaptchaServlet() {
         ServletRegistrationBean kaptchaServlet = new ServletRegistrationBean(new KaptchaServlet(), "/kaptcha.jpg");
         kaptchaServlet.addInitParameter(Constants.KAPTCHA_BORDER, "no");
         kaptchaServlet.addInitParameter(Constants.KAPTCHA_IMAGE_WIDTH, "160");

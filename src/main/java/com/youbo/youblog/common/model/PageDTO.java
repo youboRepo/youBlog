@@ -20,8 +20,8 @@ import java.util.function.Function;
  */
 @Getter
 @AllArgsConstructor
-public class PageDTO<T> implements Serializable
-{
+public class PageDTO<T> implements Serializable {
+
     /**
      * 序列化标识
      */
@@ -45,8 +45,7 @@ public class PageDTO<T> implements Serializable
      * @param <R>
      * @return
      */
-    public <R> PageDTO<R> clone(BiFunction<List<T>, Class<R>, List<R>> action, Class<R> clazz)
-    {
+    public <R> PageDTO<R> clone(BiFunction<List<T>, Class<R>, List<R>> action, Class<R> clazz) {
         return new PageDTO<>(this.total, action.apply(this.records, clazz));
     }
 
@@ -57,8 +56,7 @@ public class PageDTO<T> implements Serializable
      * @param <R>
      * @return
      */
-    public <R> PageDTO<R> clone(Function<Collection<T>, List<R>> mapper)
-    {
+    public <R> PageDTO<R> clone(Function<Collection<T>, List<R>> mapper) {
         return new PageDTO<>(this.total, mapper.apply(this.records));
     }
 
@@ -67,8 +65,7 @@ public class PageDTO<T> implements Serializable
      *
      * @param action
      */
-    public void forEach(Consumer<? super T> action)
-    {
+    public void forEach(Consumer<? super T> action) {
         Optional.ofNullable(this.records).orElse(Collections.emptyList()).forEach(action);
     }
 }

@@ -15,8 +15,8 @@ import java.util.List;
  * @author youxiaobo
  * @date 2021/3/8
  */
-public class TreeUtils
-{
+public class TreeUtils {
+
     /**
      * 构造节点列表
      *
@@ -27,8 +27,7 @@ public class TreeUtils
      * @param <T>
      * @return
      */
-    public static <T> TreeNode<T> buildTreeNode(T id, T parentId, String name, Comparable<?> weight)
-    {
+    public static <T> TreeNode<T> buildTreeNode(T id, T parentId, String name, Comparable<?> weight) {
         return new TreeNode<>(id, parentId, name, weight).setExtra(MapUtil.of("value", id));
     }
 
@@ -41,8 +40,7 @@ public class TreeUtils
      * @param <T>
      * @return
      */
-    public static <T> TreeNode<T> buildTreeNode(T id, T parentId, String name)
-    {
+    public static <T> TreeNode<T> buildTreeNode(T id, T parentId, String name) {
         return buildTreeNode(id, parentId, name, name);
     }
 
@@ -54,8 +52,7 @@ public class TreeUtils
      * @param <T>
      * @return
      */
-    public static <T> List<Tree<T>> buildTreeList(List<TreeNode<T>> treeNodes, T parentId)
-    {
+    public static <T> List<Tree<T>> buildTreeList(List<TreeNode<T>> treeNodes, T parentId) {
         TreeNodeConfig treeNodeConfig = new TreeNodeConfig().setNameKey("label");
         return TreeUtil.build(treeNodes, parentId, treeNodeConfig, new DefaultNodeParser<>());
     }

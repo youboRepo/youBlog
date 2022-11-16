@@ -13,8 +13,8 @@ import java.util.Map;
  * @date 2020/10/22
  */
 @Data
-public class Response<T>
-{
+public class Response<T> {
+
     /**
      * 响应代码
      */
@@ -42,8 +42,7 @@ public class Response<T>
      *
      * @return
      */
-    public static <T> Response<T> ok()
-    {
+    public static <T> Response<T> ok() {
         return ok(null);
     }
 
@@ -53,8 +52,7 @@ public class Response<T>
      * @param data
      * @return
      */
-    public static <T> Response<T> ok(T data)
-    {
+    public static <T> Response<T> ok(T data) {
         Response<T> response = new Response<>();
         response.setCode(20000);
         response.setData(data);
@@ -67,8 +65,7 @@ public class Response<T>
      * @param message
      * @return
      */
-    public static <T> Response<T> error(String message)
-    {
+    public static <T> Response<T> error(String message) {
         return error(50000, message);
     }
 
@@ -79,10 +76,8 @@ public class Response<T>
      * @param message
      * @return
      */
-    public static <T> Response<T> error(int code, String message)
-    {
-        if (StringUtils.isBlank(message))
-        {
+    public static <T> Response<T> error(int code, String message) {
+        if (StringUtils.isBlank(message)) {
             message = "未知系统错误";
         }
 
@@ -92,8 +87,7 @@ public class Response<T>
         return response;
     }
 
-    public static Response<String> location(String location)
-    {
+    public static Response<String> location(String location) {
         Response<String> response = new Response<>();
         response.setLocation(location);
         response.setData(location);
@@ -107,12 +101,9 @@ public class Response<T>
      * @param value
      * @return
      */
-    public Response<T> put(String key, Object value)
-    {
-        if (StringUtils.isNotBlank(key) || value != null)
-        {
-            if (this.extra == null)
-            {
+    public Response<T> put(String key, Object value) {
+        if (StringUtils.isNotBlank(key) || value != null) {
+            if (this.extra == null) {
                 this.extra = new HashMap<>(16);
             }
             this.extra.put(key, value);

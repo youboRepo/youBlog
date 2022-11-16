@@ -14,8 +14,8 @@ import javax.annotation.Resource;
  */
 @RestController
 @RequestMapping("users")
-public class UserController
-{
+public class UserController {
+
     @Resource
     private UserService userService;
 }

@@ -9,6 +9,6 @@ import com.youbo.youblog.common.jdbc.MyBaseMapper;
  * @author youxiaobo
  * @date 2022/11/16
  */
-public interface UserMapper extends MyBaseMapper<User>
-{
+public interface UserMapper extends MyBaseMapper<User> {
+
 }

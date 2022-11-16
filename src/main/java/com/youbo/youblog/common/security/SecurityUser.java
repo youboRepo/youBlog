@@ -18,8 +18,8 @@ import java.util.List;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class SecurityUser implements UserDetails
-{
+public class SecurityUser implements UserDetails {
+
     /**
      * 序列化标识
      */
@@ -39,63 +39,54 @@ public class SecurityUser implements UserDetails
 
     private List<GrantedAuthority> authorities;
 
-    public SecurityUser()
-    {
+    public SecurityUser() {
 
     }
 
-    public SecurityUser(UserCustom user, List<GrantedAuthority> authorities)
-    {
+    public SecurityUser(UserCustom user, List<GrantedAuthority> authorities) {
         this.user = user;
         this.authorities = authorities;
     }
 
     @Override
     @JSONField(serialize = false)
-    public Collection<? extends GrantedAuthority> getAuthorities()
-    {
+    public Collection<? extends GrantedAuthority> getAuthorities() {
         return authorities;
     }
 
     @Override
     @JSONField(serialize = false)
-    public String getPassword()
-    {
+    public String getPassword() {
         return user.getPassword();
     }
 
     @Override
     @JSONField(serialize = false)
-    public String getUsername()
-    {
+    public String getUsername() {
         return user.getUsername();
     }
 
     @Override
     @JSONField(serialize = false)
-    public boolean isAccountNonExpired()
-    {
+    public boolean isAccountNonExpired() {
         return true;
     }
 
     @Override
     @JSONField(serialize = false)
-    public boolean isAccountNonLocked()
-    {
+    public boolean isAccountNonLocked() {
         return true;
     }
 
     @Override
     @JSONField(serialize = false)
-    public boolean isCredentialsNonExpired()
-    {
+    public boolean isCredentialsNonExpired() {
         return true;
     }
 
     @Override
     @JSONField(serialize = false)
-    public boolean isEnabled()
-    {
+    public boolean isEnabled() {
         return user.getEnabled();
     }
 }

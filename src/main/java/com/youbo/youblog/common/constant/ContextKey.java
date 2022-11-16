@@ -6,8 +6,8 @@ package com.youbo.youblog.common.constant;
  * @author youxiaobo
  * @date 2020/8/20
  */
-public interface ContextKey
-{
+public interface ContextKey {
+
     /**
      * 用户标识
      */

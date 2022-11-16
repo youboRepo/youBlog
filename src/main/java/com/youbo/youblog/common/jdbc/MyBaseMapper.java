@@ -8,8 +8,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author youxiaobo
  * @date 2020/7/29
  */
-public interface MyBaseMapper<E> extends BaseMapper<E>
-{
+public interface MyBaseMapper<E> extends BaseMapper<E> {
+
     /**
      * 插入忽略
      *

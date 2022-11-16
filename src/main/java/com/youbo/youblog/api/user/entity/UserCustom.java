@@ -11,8 +11,8 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class UserCustom extends User
-{
+public class UserCustom extends User {
+
     /**
      * 序列化标识
      */

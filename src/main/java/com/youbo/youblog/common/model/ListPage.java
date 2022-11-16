@@ -18,8 +18,8 @@ import java.util.function.BiFunction;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ListPage<T> implements Serializable
-{
+public class ListPage<T> implements Serializable {
+
     /**
      * 序列化标识
      */
@@ -63,8 +63,7 @@ public class ListPage<T> implements Serializable
      * @param total
      * @param records
      */
-    public ListPage(long current, long size, long total, List<T> records)
-    {
+    public ListPage(long current, long size, long total, List<T> records) {
         this.current = current;
         this.size = size;
         this.total = total;
@@ -79,8 +78,7 @@ public class ListPage<T> implements Serializable
      * @param <R>
      * @return
      */
-    public <R> ListPage<R> clone(BiFunction<List<T>, Class<R>, List<R>> action, Class<R> clazz)
-    {
+    public <R> ListPage<R> clone(BiFunction<List<T>, Class<R>, List<R>> action, Class<R> clazz) {
         return new ListPage<>(this.current, this.size, this.total, action.apply(this.records, clazz));
     }
 }
