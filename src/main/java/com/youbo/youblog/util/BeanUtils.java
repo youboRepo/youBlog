@@ -2,7 +2,6 @@ package com.youbo.youblog.util;
 
 import com.youbo.youblog.common.exception.BaseException;
 import org.springframework.cglib.beans.BeanCopier;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;

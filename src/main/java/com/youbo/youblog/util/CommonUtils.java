@@ -12,7 +12,6 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.Assert;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;

@@ -3,7 +3,6 @@ package com.youbo.youblog.util;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import com.youbo.youblog.common.exception.BaseException;
 import lombok.extern.slf4j.Slf4j;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;

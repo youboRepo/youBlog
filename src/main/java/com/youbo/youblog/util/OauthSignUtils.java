@@ -3,7 +3,6 @@ package com.youbo.youblog.util;
 
 import com.youbo.youblog.common.constant.OauthConstant;
 import org.apache.commons.lang3.StringUtils;
-
 import javax.crypto.Mac;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
